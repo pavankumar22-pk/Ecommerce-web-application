@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>SmartCart | Add Product</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f4f6fb;
+
+            color: #111827;
+
+            padding-bottom: 30px;
+        }
+
+        .header {
+            padding: 22px 18px 28px;
+
+            color: white;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            border-radius:
+                0 0 28px 28px;
+        }
+
+        .header-inner {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .back {
+            color: white;
+            text-decoration: none;
+
+            display: inline-flex;
+            align-items: center;
+
+            min-height: 44px;
+
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        .subtitle {
+            opacity: .8;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 850px;
+
+            margin: -12px auto 0;
+
+            padding: 0 16px;
+        }
+
+        .card {
+            background: white;
+
+            border-radius: 26px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,.10);
+        }
+
+        .flash {
+            padding: 12px 14px;
+
+            background: #dcfce7;
+            color: #166534;
+
+            border-radius: 13px;
+
+            margin-bottom: 18px;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            color: #374151;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            background: #f9fafb;
+
+            padding: 13px 14px;
+
+            font-family: inherit;
+            font-size: 16px;
+
+            outline: none;
+
+            transition: .2s;
+        }
+
+        input {
+            height: 52px;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            background: white;
+
+            border-color: #667eea;
+
+            box-shadow:
+                0 0 0 4px rgba(102,126,234,.10);
+        }
+
+        .file-box {
+            padding: 18px;
+
+            border: 2px dashed #c7d2fe;
+
+            border-radius: 16px;
+
+            background: #f8f9ff;
+        }
+
+        input[type="file"] {
+            border: none;
+            background: transparent;
+            padding: 5px;
+        }
+
+        .submit {
+            width: 100%;
+
+            min-height: 54px;
+
+            border: none;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 22px rgba(79,70,229,.25);
+
+            touch-action: manipulation;
+        }
+
+        .submit:active {
+            transform: scale(.97);
+        }
+
+        @media(max-width:500px) {
+            .card {
+                padding: 20px;
+                border-radius: 22px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="header-inner">
+
+        <a href="/admin-dashboard" class="back">
+            ← &nbsp; Dashboard
+        </a>
+
+        <h1>➕ Add Product</h1>
+
+        <p class="subtitle">
+            Add a new product to your SmartCart store
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="content">
+
+    <div class="card">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+
+        <form method="POST"
+              action="/admin/add-item"
+              enctype="multipart/form-data">
+
+            <div class="field">
+                <label>Product Name</label>
+
+                <input type="text"
+                       name="name"
+                       placeholder="Enter product name"
+                       required>
+            </div>
+
+
+            <div class="field">
+                <label>Description</label>
+
+                <textarea name="description"
+                          placeholder="Describe your product"
+                          required></textarea>
+            </div>
+
+
+            <div class="field">
+                <label>Category</label>
+
+                <input type="text"
+                       name="category"
+                       placeholder="Example: Electronics"
+                       required>
+            </div>
+
+
+            <div class="field">
+                <label>Price</label>
+
+                <input type="number"
+                       step="0.01"
+                       name="price"
+                       placeholder="₹ 0.00"
+                       required>
+            </div>
+
+
+            <div class="field">
+
+                <label>Product Image</label>
+
+                <div class="file-box">
+
+                    <input type="file"
+                           name="image"
+                           accept="image/*"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <button type="submit" class="submit">
+                🛒 &nbsp; Add Product
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>SmartCart | Admin Dashboard</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+
+        body {
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            min-height: 100vh;
+
+            color: #111827;
+
+            background:
+                radial-gradient(
+                    circle at 0% 0%,
+                    #dbeafe 0,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 100% 100%,
+                    #ede9fe 0,
+                    transparent 30%
+                ),
+                #f5f7fb;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* ================= TOP HEADER ================= */
+
+        .header {
+
+            color: white;
+
+            padding:
+                22px
+                18px
+                85px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea 0%,
+                    #764ba2 50%,
+                    #4f46e5 100%
+                );
+
+            border-radius:
+                0
+                0
+                36px
+                36px;
+
+            box-shadow:
+                0 15px 35px rgba(79,70,229,0.20);
+        }
+
+
+        .header-inner {
+
+            width: 100%;
+            max-width: 1050px;
+
+            margin: auto;
+        }
+
+
+        .topbar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        /* ================= BRAND ================= */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+        }
+
+
+        .brand-icon {
+
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,0.18);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.25);
+
+            backdrop-filter: blur(15px);
+
+            font-size: 25px;
+        }
+
+
+        .brand-text {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            letter-spacing: -.3px;
+        }
+
+
+        /* ================= LOGOUT ================= */
+
+        .logout {
+
+            min-height: 44px;
+
+            padding: 10px 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 13px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            background:
+                rgba(255,255,255,0.16);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.25);
+
+            backdrop-filter: blur(15px);
+
+            transition: .2s;
+        }
+
+
+        .logout:active {
+
+            transform: scale(.95);
+        }
+
+
+        /* ================= DASHBOARD CONTENT ================= */
+
+        .content {
+
+            width: 100%;
+
+            max-width: 1050px;
+
+            margin:
+                -60px
+                auto
+                0;
+
+            padding:
+                0
+                18px
+                35px;
+        }
+
+
+        /* ================= WELCOME CARD ================= */
+
+        .welcome {
+
+            background:
+                rgba(255,255,255,.94);
+
+            border-radius: 28px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 18px 40px rgba(0,0,0,.10);
+
+            margin-bottom: 20px;
+        }
+
+
+        .welcome-label {
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 6px;
+        }
+
+
+        .welcome h1 {
+
+            font-size:
+                clamp(28px,5vw,42px);
+
+            line-height: 1.1;
+
+            color: #111827;
+
+            margin-bottom: 9px;
+        }
+
+
+        .welcome p {
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            max-width: 650px;
+        }
+
+
+        /* ================= FLASH MESSAGE ================= */
+
+        .flash {
+
+            padding: 13px 15px;
+
+            border-radius: 14px;
+
+            margin-bottom: 18px;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            box-shadow:
+                0 5px 15px rgba(22,101,52,.08);
+        }
+
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-title {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin:
+                22px
+                3px
+                12px;
+        }
+
+
+        .section-title h2 {
+
+            font-size: 20px;
+
+            color: #111827;
+        }
+
+
+        .section-title span {
+
+            color: #9ca3af;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= ACTION GRID ================= */
+
+        .actions {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 17px;
+        }
+
+
+        /* ================= ACTION CARD ================= */
+
+        .action-card {
+
+            position: relative;
+
+            min-height: 185px;
+
+            padding: 23px;
+
+            border-radius: 24px;
+
+            background:
+                rgba(255,255,255,.94);
+
+            color: #111827;
+
+            text-decoration: none;
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,.08);
+
+            overflow: hidden;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+
+        .action-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 110px;
+            height: 110px;
+
+            border-radius: 50%;
+
+            right: -45px;
+            bottom: -45px;
+
+            background:
+                rgba(99,102,241,.07);
+        }
+
+
+        .action-card:active {
+
+            transform: scale(.97);
+        }
+
+
+        /* ================= ICON ================= */
+
+        .action-icon {
+
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 28px;
+
+            margin-bottom: 17px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            box-shadow:
+                0 9px 20px rgba(79,70,229,.20);
+        }
+
+
+        .action-card h3 {
+
+            font-size: 18px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .action-card p {
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            line-height: 1.45;
+        }
+
+
+        /* ================= QUICK STATUS ================= */
+
+        .status-card {
+
+            margin-top: 20px;
+
+            padding: 22px;
+
+            border-radius: 23px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            border:
+                1px solid
+                #e0e7ff;
+        }
+
+
+        .status-top {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .status-icon {
+
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: white;
+
+            font-size: 22px;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,.06);
+        }
+
+
+        .status-card h3 {
+
+            font-size: 16px;
+        }
+
+
+        .status-card p {
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin-left: 56px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+        }
+
+
+        .footer strong {
+
+            color: #6b7280;
+        }
+
+
+        /* ================= TABLET ================= */
+
+        @media(max-width:850px) {
+
+            .actions {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width:600px) {
+
+            .header {
+
+                padding:
+                    18px
+                    15px
+                    75px;
+
+                border-radius:
+                    0
+                    0
+                    30px
+                    30px;
+            }
+
+
+            .content {
+
+                margin-top: -50px;
+
+                padding:
+                    0
+                    13px
+                    30px;
+            }
+
+
+            .brand-text {
+
+                font-size: 18px;
+            }
+
+
+            .logout {
+
+                padding:
+                    9px
+                    12px;
+
+                font-size: 12px;
+            }
+
+
+            .welcome {
+
+                padding: 23px;
+
+                border-radius: 23px;
+            }
+
+
+            .actions {
+
+                grid-template-columns: 1fr;
+
+                gap: 13px;
+            }
+
+
+            .action-card {
+
+                min-height: 135px;
+
+                padding: 20px;
+            }
+
+
+            .action-icon {
+
+                width: 52px;
+                height: 52px;
+
+                font-size: 25px;
+
+                margin-bottom: 13px;
+            }
+
+
+            .action-card h3 {
+
+                font-size: 17px;
+            }
+
+
+            .status-card {
+
+                padding: 19px;
+            }
+
+        }
+
+
+        /* ================= SMALL PHONE ================= */
+
+        @media(max-width:380px) {
+
+            .welcome h1 {
+
+                font-size: 27px;
+            }
+
+
+            .brand-icon {
+
+                width: 43px;
+                height: 43px;
+            }
+
+
+            .logout {
+
+                min-height: 42px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="topbar">
+
+
+            <!-- BRAND -->
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🛒
+                </div>
+
+                <div class="brand-text">
+                    SmartCart Admin
+                </div>
+
+            </div>
+
+
+            <!-- LOGOUT -->
+
+            <a href="/admin-logout"
+               class="logout">
+
+                🚪 &nbsp; Logout
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= CONTENT ================= -->
+
+<main class="content">
+
+
+    <!-- FLASH MESSAGES -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="flash">
+
+                ✓ &nbsp; {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+
+    <!-- WELCOME -->
+
+    <section class="welcome">
+
+        <div class="welcome-label">
+            ADMIN DASHBOARD
+        </div>
+
+        <h1>
+            Welcome, {{ admin_name }} 👋
+        </h1>
+
+        <p>
+            Manage your SmartCart store, products,
+            profile and shopping inventory from one
+            simple dashboard.
+        </p>
+
+    </section>
+
+
+
+    <!-- SECTION TITLE -->
+
+    <div class="section-title">
+
+        <h2>
+            Quick Actions
+        </h2>
+
+        <span>
+            Manage your store
+        </span>
+
+    </div>
+
+
+
+    <!-- ACTION CARDS -->
+
+    <section class="actions">
+
+
+        <!-- PRODUCTS -->
+
+        <a href="/admin/item-list"
+           class="action-card">
+
+            <div class="action-icon">
+                📦
+            </div>
+
+            <h3>
+                Products
+            </h3>
+
+            <p>
+                View, search, edit and delete
+                products in your SmartCart store.
+            </p>
+
+        </a>
+
+
+
+        <!-- PROFILE -->
+
+        <a href="/admin/profile"
+           class="action-card">
+
+            <div class="action-icon">
+                👤
+            </div>
+
+            <h3>
+                Admin Profile
+            </h3>
+
+            <p>
+                Update your name, email, password
+                and profile picture.
+            </p>
+
+        </a>
+
+
+
+        <!-- ADD PRODUCT -->
+
+        <a href="/admin/add-item"
+           class="action-card">
+
+            <div class="action-icon">
+                ➕
+            </div>
+
+            <h3>
+                Add Product
+            </h3>
+
+            <p>
+                Add a new product with image,
+                category, price and description.
+            </p>
+
+        </a>
+
+
+    </section>
+
+
+
+    <!-- STATUS -->
+
+    <div class="status-card">
+
+        <div class="status-top">
+
+            <div class="status-icon">
+                ✨
+            </div>
+
+            <h3>
+                SmartCart Admin Center
+            </h3>
+
+        </div>
+
+        <p>
+            Your administration panel is ready.
+            Choose an option above to manage your
+            store.
+        </p>
+
+    </div>
+
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <strong>SmartCart</strong>
+        &nbsp;•&nbsp;
+        Smart Shopping Management
+
+    </div>
+
+
+</main>
+
+
+</body>
+</html>

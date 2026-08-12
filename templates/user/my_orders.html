@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>My Orders | SmartCart</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f5f7fb;
+
+            color: #111827;
+        }
+
+        .header {
+            padding: 22px 18px 70px;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            color: white;
+
+            border-radius:
+                0 0 32px 32px;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .back {
+            display: inline-flex;
+
+            align-items: center;
+
+            min-height: 44px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 29px;
+        }
+
+        .subtitle {
+            margin-top: 5px;
+
+            opacity: .8;
+
+            font-size: 13px;
+        }
+
+        .content {
+            max-width: 900px;
+
+            margin: -48px auto 30px;
+
+            padding: 0 16px;
+        }
+
+        .orders {
+            display: grid;
+
+            gap: 14px;
+        }
+
+        .order-card {
+            background: white;
+
+            border-radius: 23px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 10px 28px rgba(0,0,0,.08);
+        }
+
+        .order-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            margin-bottom: 16px;
+        }
+
+        .order-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background: #eef2ff;
+
+            font-size: 23px;
+        }
+
+        .order-title {
+            flex: 1;
+        }
+
+        .order-title h2 {
+            font-size: 17px;
+
+            margin-bottom: 4px;
+        }
+
+        .date {
+            color: #9ca3af;
+
+            font-size: 12px;
+        }
+
+        .status {
+            padding: 7px 10px;
+
+            border-radius: 20px;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+        .info {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+            gap: 10px;
+
+            margin-bottom: 16px;
+        }
+
+        .info-box {
+            padding: 13px;
+
+            border-radius: 14px;
+
+            background: #f8fafc;
+        }
+
+        .label {
+            color: #9ca3af;
+
+            font-size: 10px;
+
+            margin-bottom: 4px;
+        }
+
+        .value {
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+        .amount {
+            color: #4f46e5;
+        }
+
+        .actions {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 9px;
+        }
+
+        .btn {
+            min-height: 46px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-align: center;
+        }
+
+        .view {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .invoice {
+            background: #f3e8ff;
+            color: #7e22ce;
+        }
+
+        .btn:active {
+            transform: scale(.97);
+        }
+
+        .empty {
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 45px 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 28px rgba(0,0,0,.07);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            margin-bottom: 7px;
+        }
+
+        .empty p {
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        .shop {
+            display: inline-flex;
+
+            min-height: 48px;
+
+            padding: 0 18px;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 800;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+        }
+
+        @media(max-width:500px) {
+
+            .order-top {
+                flex-wrap: wrap;
+            }
+
+            .info {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <a href="/user/products" class="back">
+            ← Continue Shopping
+        </a>
+
+        <h1>
+            📦 My Orders
+        </h1>
+
+        <p class="subtitle">
+            Track your SmartCart purchases
+        </p>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+
+    {% if orders|length == 0 %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🛍️
+            </div>
+
+            <h2>
+                No Orders Yet
+            </h2>
+
+            <p>
+                You haven't placed any orders yet.
+                Start shopping and your orders will appear here.
+            </p>
+
+            <a href="/user/products"
+               class="shop">
+                Browse Products
+            </a>
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="orders">
+
+            {% for order in orders %}
+
+            <div class="order-card">
+
+
+                <div class="order-top">
+
+                    <div class="order-icon">
+                        📦
+                    </div>
+
+                    <div class="order-title">
+
+                        <h2>
+                            Order #{{ order.order_id }}
+                        </h2>
+
+                        <div class="date">
+                            {{ order.created_at }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="status">
+                        {{ order.payment_status }}
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            AMOUNT
+                        </div>
+
+                        <div class="value amount">
+                            ₹{{ order.amount }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            PAYMENT STATUS
+                        </div>
+
+                        <div class="value">
+                            {{ order.payment_status }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="actions">
+
+                    <a href="/user/order-success/{{ order.order_id }}"
+                       class="btn view">
+                        👁 View Details
+                    </a>
+
+                    <a href="/user/download-invoice/{{ order.order_id }}"
+                       class="btn invoice">
+                        📄 Download Invoice
+                    </a>
+
+                </div>
+
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% endif %}
+
+
+</main>
+
+</body>
+</html>

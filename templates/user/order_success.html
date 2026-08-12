@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>Order Confirmed | SmartCart</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(135deg,#eef2ff,#f5f3ff);
+
+            color: #111827;
+        }
+
+        .header {
+            padding: 25px 18px 75px;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            color: white;
+
+            text-align: center;
+
+            border-radius:
+                0 0 35px 35px;
+        }
+
+        .header-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: auto auto 12px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.18);
+
+            font-size: 35px;
+        }
+
+        .header h1 {
+            font-size: 27px;
+        }
+
+        .header p {
+            margin-top: 5px;
+
+            opacity: .8;
+
+            font-size: 13px;
+        }
+
+        .content {
+            max-width: 850px;
+
+            margin: -50px auto 30px;
+
+            padding: 0 16px;
+        }
+
+        .card {
+            background: white;
+
+            border-radius: 28px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 20px 45px rgba(0,0,0,.11);
+        }
+
+        .details {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+        }
+
+        .detail {
+            padding: 16px;
+
+            border-radius: 17px;
+
+            background: #f8fafc;
+        }
+
+        .detail-label {
+            color: #9ca3af;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: #111827;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            word-break: break-word;
+        }
+
+        .amount {
+            color: #4f46e5;
+            font-size: 18px;
+        }
+
+        .section-title {
+            font-size: 19px;
+
+            margin-bottom: 12px;
+        }
+
+        .items {
+            overflow-x: auto;
+
+            border-radius: 17px;
+
+            border: 1px solid #e5e7eb;
+        }
+
+        table {
+            width: 100%;
+
+            min-width: 480px;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8fafc;
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 14px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            font-size: 13px;
+        }
+
+        td {
+            color: #374151;
+        }
+
+        .actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 9px;
+
+            margin-top: 22px;
+        }
+
+        .btn {
+            min-height: 50px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            border-radius: 14px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            padding: 8px;
+        }
+
+        .primary {
+            color: white;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+        }
+
+        .secondary {
+            color: #4338ca;
+
+            background: #eef2ff;
+        }
+
+        .invoice {
+            color: #7e22ce;
+
+            background: #f3e8ff;
+        }
+
+        .btn:active {
+            transform: scale(.97);
+        }
+
+        @media(max-width:650px) {
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+    <div class="header-icon">
+        ✓
+    </div>
+
+    <h1>
+        Order Confirmed!
+    </h1>
+
+    <p>
+        Thank you for shopping with SmartCart 🎉
+    </p>
+
+</header>
+
+
+<main class="content">
+
+    <div class="card">
+
+
+        <div class="details">
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    ORDER ID
+                </div>
+
+                <div class="detail-value">
+                    {{ order.order_id }}
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    PAYMENT ID
+                </div>
+
+                <div class="detail-value">
+                    {{ order.razorpay_payment_id }}
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    AMOUNT PAID
+                </div>
+
+                <div class="detail-value amount">
+                    ₹{{ order.amount }}
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    ORDER DATE
+                </div>
+
+                <div class="detail-value">
+                    {{ order.created_at }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <h2 class="section-title">
+            🛍️ Order Summary
+        </h2>
+
+
+        <div class="items">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for it in items %}
+
+                    <tr>
+
+                        <td>
+                            {{ it.product_name }}
+                        </td>
+
+                        <td>
+                            {{ it.quantity }}
+                        </td>
+
+                        <td>
+                            ₹{{ it.price }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="actions">
+
+            <a href="/user/products"
+               class="btn primary">
+                🛍️ Continue Shopping
+            </a>
+
+            <a href="/user/my-orders"
+               class="btn secondary">
+                📦 My Orders
+            </a>
+
+            <a href="/user/download-invoice/{{ order.order_id }}"
+               class="btn invoice">
+                📄 Download Invoice
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>SmartCart | Payment</title>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2,#4f46e5);
+
+            color: #111827;
+        }
+
+        .payment-card {
+            width: 100%;
+            max-width: 430px;
+
+            background: rgba(255,255,255,.95);
+
+            border-radius: 30px;
+
+            padding: 32px 25px;
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,.25);
+
+            text-align: center;
+        }
+
+        .icon {
+            width: 72px;
+            height: 72px;
+
+            margin: auto;
+            margin-bottom: 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            font-size: 36px;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            box-shadow:
+                0 10px 25px rgba(79,70,229,.3);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .amount-box {
+            padding: 22px;
+
+            border-radius: 20px;
+
+            background: #f5f3ff;
+
+            margin-bottom: 22px;
+        }
+
+        .amount-label {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .amount {
+            color: #4f46e5;
+
+            font-size: 34px;
+
+            font-weight: 900;
+
+            margin-top: 5px;
+        }
+
+        #rzp-button {
+            width: 100%;
+
+            min-height: 56px;
+
+            border: none;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(79,70,229,.3);
+
+            touch-action: manipulation;
+        }
+
+        #rzp-button:active {
+            transform: scale(.97);
+        }
+
+        .secure {
+            margin-top: 17px;
+
+            color: #9ca3af;
+
+            font-size: 12px;
+        }
+
+        .back {
+            display: block;
+
+            margin-top: 15px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            min-height: 44px;
+
+            padding-top: 12px;
+
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<div class="payment-card">
+
+    <div class="icon">
+        💳
+    </div>
+
+    <h1>
+        Complete Payment
+    </h1>
+
+    <p class="subtitle">
+        Securely complete your SmartCart order
+    </p>
+
+
+    <div class="amount-box">
+
+        <div class="amount-label">
+            Total Amount
+        </div>
+
+        <div class="amount">
+            ₹{{ amount }}
+        </div>
+
+    </div>
+
+
+    <button id="rzp-button">
+        🔒 &nbsp; Pay Securely
+    </button>
+
+
+    <div class="secure">
+        🔐 Secure payment powered by Razorpay
+    </div>
+
+
+    <a href="/user/products" class="back">
+        ← Back to Shopping
+    </a>
+
+</div>
+
+
+<script>
+
+var options = {
+
+    "key": "{{ key_id }}",
+
+    "amount": "{{ amount * 100 }}",
+
+    "currency": "INR",
+
+    "name": "SmartCart",
+
+    "description": "Order Payment",
+
+    "order_id": "{{ order_id }}",
+
+    "handler": function(response) {
+
+        var form = document.createElement("form");
+
+        form.method = "POST";
+
+        form.action = "/verify-payment";
+
+
+        var fields = {
+
+            razorpay_payment_id:
+                response.razorpay_payment_id,
+
+            razorpay_order_id:
+                response.razorpay_order_id,
+
+            razorpay_signature:
+                response.razorpay_signature
+
+        };
+
+
+        for (var name in fields) {
+
+            var input =
+                document.createElement("input");
+
+            input.type = "hidden";
+
+            input.name = name;
+
+            input.value = fields[name];
+
+            form.appendChild(input);
+        }
+
+
+        document.body.appendChild(form);
+
+        form.submit();
+
+    }
+
+};
+
+
+var rzp = new Razorpay(options);
+
+
+document.getElementById("rzp-button").onclick =
+    function(e) {
+
+        e.preventDefault();
+
+        rzp.open();
+
+    };
+
+</script>
+
+</body>
+</html>

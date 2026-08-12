@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>{{ product.name }} | SmartCart</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(135deg,#eef2ff,#f5f3ff);
+
+            color: #111827;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .header {
+            padding: 20px 18px 75px;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            color: white;
+
+            border-radius:
+                0 0 35px 35px;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+
+            min-height: 44px;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .content {
+            max-width: 900px;
+
+            margin: -55px auto 30px;
+
+            padding: 0 16px;
+        }
+
+        .product-card {
+            background: white;
+
+            border-radius: 30px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 45px rgba(0,0,0,.12);
+        }
+
+        .image-area {
+            height: 390px;
+
+            padding: 25px;
+
+            background: #f7f7fb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-area img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+        .details {
+            padding: 27px;
+        }
+
+        .category {
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            background: #eef2ff;
+            color: #4f46e5;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 30px;
+            line-height: 1.2;
+
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #6b7280;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+        }
+
+        .price-label {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .price {
+            color: #4f46e5;
+
+            font-size: 30px;
+
+            font-weight: 900;
+
+            margin: 3px 0 22px;
+        }
+
+        .actions {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+        }
+
+        .btn {
+            min-height: 54px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 16px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .cart {
+            color: white;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            box-shadow:
+                0 10px 22px rgba(79,70,229,.25);
+        }
+
+        .back-btn {
+            color: #4338ca;
+            background: #eef2ff;
+        }
+
+        .btn:active {
+            transform: scale(.97);
+        }
+
+        @media(max-width:550px) {
+
+            .image-area {
+                height: 300px;
+            }
+
+            .details {
+                padding: 21px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <a href="/user/products" class="back">
+            ← &nbsp; Back to Products
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+    <div class="product-card">
+
+        <div class="image-area">
+
+            <img
+                src="/static/uploads/product_images/{{ product.image }}"
+                alt="{{ product.name }}"
+            >
+
+        </div>
+
+
+        <div class="details">
+
+            <div class="category">
+                {{ product.category }}
+            </div>
+
+            <h1>
+                {{ product.name }}
+            </h1>
+
+            <p class="description">
+                {{ product.description }}
+            </p>
+
+            <div class="price-label">
+                Price
+            </div>
+
+            <div class="price">
+                ₹{{ product.price }}
+            </div>
+
+
+            <div class="actions">
+
+                <a href="/user/add-to-cart/{{ product.product_id }}"
+                   class="btn cart">
+                    🛒 &nbsp; Add to Cart
+                </a>
+
+                <a href="/user/products"
+                   class="btn back-btn">
+                    ← Continue Shopping
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>

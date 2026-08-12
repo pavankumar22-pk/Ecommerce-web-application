@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartCart</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(255,255,255,0.18),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(255,255,255,0.15),
+                    transparent 25%
+                ),
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2,
+                    #4f46e5
+                );
+
+            color: white;
+        }
+
+
+        /* BACKGROUND CIRCLES */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+        }
+
+        .circle.one {
+            width: 250px;
+            height: 250px;
+            top: -120px;
+            left: -80px;
+        }
+
+        .circle.two {
+            width: 180px;
+            height: 180px;
+            bottom: -90px;
+            right: -60px;
+        }
+
+        .circle.three {
+            width: 100px;
+            height: 100px;
+            top: 45%;
+            left: 8%;
+        }
+
+
+        /* MAIN */
+
+        .page {
+            width: 100%;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 15px;
+        }
+
+
+        /* MAIN BOX */
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+
+            padding: 32px 40px;
+
+            border-radius: 28px;
+
+            background: rgba(255,255,255,0.14);
+
+            border: 1px solid rgba(255,255,255,0.28);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,0.25);
+
+            text-align: center;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            width: 65px;
+            height: 65px;
+
+            margin: 0 auto 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 35px;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,0.20);
+
+            border: 1px solid rgba(255,255,255,0.30);
+        }
+
+
+        /* TITLE */
+
+        h1 {
+            font-size: 52px;
+            font-weight: 800;
+
+            margin-bottom: 3px;
+        }
+
+        .subtitle {
+            font-size: 17px;
+
+            color: rgba(255,255,255,0.88);
+
+            margin-bottom: 7px;
+        }
+
+        .description {
+            max-width: 650px;
+
+            margin: 0 auto 25px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            color: rgba(255,255,255,0.72);
+        }
+
+
+        /* USER + ADMIN */
+
+        .options {
+            width: 100%;
+            max-width: 720px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 25px;
+        }
+
+
+        /* CARD */
+
+        .card {
+            padding: 25px;
+
+            border-radius: 22px;
+
+            background: rgba(255,255,255,0.14);
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,0.15);
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+
+            background: rgba(255,255,255,0.20);
+        }
+
+
+        /* ICON */
+
+        .icon {
+            width: 55px;
+            height: 55px;
+
+            margin: 0 auto 10px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 29px;
+
+            border-radius: 16px;
+
+            background: rgba(255,255,255,0.20);
+        }
+
+
+        /* CARD TITLE */
+
+        .card h2 {
+            font-size: 25px;
+
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            font-size: 12px;
+
+            color: rgba(255,255,255,0.70);
+
+            margin-bottom: 17px;
+        }
+
+
+        /* BUTTONS */
+
+        .btn {
+            width: 100%;
+
+            height: 46px;
+
+            margin: 9px 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            border: none;
+
+            transition: 0.2s;
+
+            cursor: pointer;
+
+            touch-action: manipulation;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+
+            filter: brightness(1.1);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+
+        /* LOGIN */
+
+        .login {
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #4f46e5
+            );
+
+            box-shadow:
+                0 7px 18px rgba(79,70,229,0.35);
+        }
+
+
+        /* REGISTER */
+
+        .register {
+            background: linear-gradient(
+                135deg,
+                #a855f7,
+                #7c3aed
+            );
+
+            box-shadow:
+                0 7px 18px rgba(124,58,237,0.35);
+        }
+
+
+        /* FOOTER */
+
+        .footer {
+            margin-top: 20px;
+
+            font-size: 11px;
+
+            color: rgba(255,255,255,0.55);
+        }
+
+        .footer span {
+            color: white;
+            font-weight: 600;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            body {
+                overflow-y: auto;
+            }
+
+            .page {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .container {
+                padding: 28px 18px;
+            }
+
+            h1 {
+                font-size: 42px;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+
+                max-width: 430px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- BACKGROUND -->
+
+    <div class="background">
+
+        <div class="circle one"></div>
+
+        <div class="circle two"></div>
+
+        <div class="circle three"></div>
+
+    </div>
+
+
+
+    <!-- MAIN PAGE -->
+
+    <div class="page">
+
+        <div class="container">
+
+
+            <!-- LOGO -->
+
+            <div class="logo">
+                🛒
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h1>
+                SmartCart
+            </h1>
+
+            <div class="subtitle">
+                Your Smart Shopping Experience
+            </div>
+
+            <div class="description">
+                Shop smarter, manage your products effortlessly,
+                and enjoy a simple and secure shopping experience
+                with SmartCart.
+            </div>
+
+
+
+            <!-- USER + ADMIN -->
+
+            <div class="options">
+
+
+                <!-- ================= USER ================= -->
+
+                <div class="card">
+
+                    <div class="icon">
+                        👤
+                    </div>
+
+                    <h2>
+                        User
+                    </h2>
+
+                    <p>
+                        Browse products, manage your cart
+                        and place orders easily.
+                    </p>
+
+
+                    <!-- USER LOGIN -->
+
+                    <a
+                        href="{{ url_for('user_login') }}"
+                        class="btn login"
+                    >
+                        🔐 &nbsp; User Login
+                    </a>
+
+
+                    <!-- USER REGISTER -->
+
+                    <a
+                        href="{{ url_for('user_register') }}"
+                        class="btn register"
+                    >
+                        ✨ &nbsp; User Register
+                    </a>
+
+                </div>
+
+
+
+                <!-- ================= ADMIN ================= -->
+
+                <div class="card">
+
+                    <div class="icon">
+                        🛠️
+                    </div>
+
+                    <h2>
+                        Admin
+                    </h2>
+
+                    <p>
+                        Manage products, users, orders
+                        and your SmartCart store.
+                    </p>
+
+
+                    <!-- ADMIN LOGIN -->
+
+                    <a
+                        href="{{ url_for('admin_login') }}"
+                        class="btn login"
+                    >
+                        🔐 &nbsp; Admin Login
+                    </a>
+
+
+                    <!-- ADMIN REGISTER -->
+
+                    <a
+                        href="{{ url_for('admin_signup') }}"
+                        class="btn register"
+                    >
+                        🚀 &nbsp; Admin Register
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FOOTER -->
+
+            <div class="footer">
+
+                <span>SmartCart</span>
+                • Smart Shopping Made Simple
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

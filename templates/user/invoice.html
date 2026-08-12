@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0">
+
+    <title>SmartCart | Invoice</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            padding: 25px 15px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            color: #111827;
+        }
+
+
+        /* ================= INVOICE ================= */
+
+        .invoice-box {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            margin: auto;
+
+            background: white;
+
+            border-radius: 28px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,.10);
+
+            overflow: hidden;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 20px;
+
+            padding-bottom: 25px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .brand-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 16px;
+
+            font-size: 27px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            box-shadow:
+                0 8px 20px
+                rgba(79,70,229,.22);
+        }
+
+
+        .brand h1 {
+
+            font-size: 24px;
+
+            font-weight: 900;
+
+            color: #111827;
+        }
+
+
+        .brand p {
+
+            color: #9ca3af;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+
+        .invoice-title {
+
+            text-align: right;
+        }
+
+
+        .invoice-title h2 {
+
+            color: #4f46e5;
+
+            font-size: 24px;
+
+            font-weight: 900;
+        }
+
+
+        .invoice-title p {
+
+            color: #9ca3af;
+
+            font-size: 11px;
+
+            margin-top: 4px;
+        }
+
+
+        /* ================= CUSTOMER ================= */
+
+        .customer-section {
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            border-radius: 19px;
+
+            background:
+                #f8fafc;
+        }
+
+
+        .section-label {
+
+            color: #9ca3af;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: .5px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .customer-id {
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            color: #111827;
+        }
+
+
+        /* ================= ITEMS ================= */
+
+        .items-section {
+
+            margin-top: 28px;
+        }
+
+
+        .items-section h3 {
+
+            font-size: 19px;
+
+            margin-bottom: 13px;
+        }
+
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+            border:
+                1px solid #e5e7eb;
+
+            border-radius: 17px;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            min-width: 520px;
+
+            border-collapse: collapse;
+        }
+
+
+        th {
+
+            background:
+                #f8fafc;
+
+            color: #6b7280;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .3px;
+
+            text-align: left;
+        }
+
+
+        th,
+        td {
+
+            padding: 14px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+        }
+
+
+        tr:last-child td {
+
+            border-bottom: none;
+        }
+
+
+        td {
+
+            color: #374151;
+
+            font-size: 13px;
+        }
+
+
+        td:first-child {
+
+            font-weight: 700;
+
+            color: #111827;
+        }
+
+
+        /* ================= TOTAL ================= */
+
+        .total-section {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-top: 22px;
+        }
+
+
+        .total-box {
+
+            width: 280px;
+
+            padding: 20px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            border:
+                1px solid #e0e7ff;
+        }
+
+
+        .total-label {
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .total {
+
+            color: #4f46e5;
+
+            font-size: 28px;
+
+            font-weight: 900;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+
+            margin-top: 30px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid #e5e7eb;
+
+            text-align: center;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+
+        .footer strong {
+
+            color: #6b7280;
+        }
+
+
+        /* ================= PRINT ================= */
+
+        @media print {
+
+            body {
+
+                background: white;
+
+                padding: 0;
+            }
+
+            .invoice-box {
+
+                max-width: none;
+
+                box-shadow: none;
+
+                border-radius: 0;
+
+            }
+
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width:600px) {
+
+            body {
+
+                padding: 10px;
+            }
+
+
+            .invoice-box {
+
+                padding: 20px;
+
+                border-radius: 22px;
+            }
+
+
+            .header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .invoice-title {
+
+                text-align: left;
+            }
+
+
+            .invoice-title h2 {
+
+                font-size: 21px;
+            }
+
+
+            .brand h1 {
+
+                font-size: 21px;
+            }
+
+
+            .customer-section {
+
+                padding: 16px;
+            }
+
+
+            .total-section {
+
+                justify-content: stretch;
+            }
+
+
+            .total-box {
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="invoice-box">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🛒
+            </div>
+
+            <div>
+
+                <h1>
+                    SmartCart
+                </h1>
+
+                <p>
+                    Smart Shopping • Simple Living
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="invoice-title">
+
+            <h2>
+                INVOICE
+            </h2>
+
+            <p>
+                Order Payment Receipt
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= CUSTOMER ================= -->
+
+    <div class="customer-section">
+
+        <div class="section-label">
+            CUSTOMER DETAILS
+        </div>
+
+        <div class="customer-id">
+
+            User ID:
+            {{ order.user_id }}
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= ITEMS ================= -->
+
+    <div class="items-section">
+
+        <h3>
+            🛍️ Order Items
+        </h3>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for it in items %}
+
+                    <tr>
+
+                        <td>
+                            {{ it.product_name }}
+                        </td>
+
+                        <td>
+                            {{ it.quantity }}
+                        </td>
+
+                        <td>
+                            ₹{{ it.price }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= TOTAL ================= -->
+
+    <div class="total-section">
+
+        <div class="total-box">
+
+            <div class="total-label">
+                GRAND TOTAL
+            </div>
+
+            <div class="total">
+                ₹{{ order.amount }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+
+        <strong>
+            Thank you for shopping with SmartCart!
+        </strong>
+
+        <br>
+
+        This is a computer-generated invoice
+        and does not require a signature.
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>Payment Successful | SmartCart</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(135deg,#ecfdf5,#eef2ff);
+        }
+
+        .card {
+            width: 100%;
+            max-width: 480px;
+
+            padding: 35px 25px;
+
+            background: white;
+
+            border-radius: 30px;
+
+            text-align: center;
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.12);
+        }
+
+        .success-icon {
+            width: 85px;
+            height: 85px;
+
+            margin: auto;
+            margin-bottom: 20px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #dcfce7;
+
+            color: #16a34a;
+
+            font-size: 45px;
+
+            box-shadow:
+                0 10px 25px rgba(22,163,74,.15);
+        }
+
+        h1 {
+            color: #166534;
+
+            font-size: 29px;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+        .details {
+            text-align: left;
+
+            background: #f9fafb;
+
+            border-radius: 18px;
+
+            padding: 18px;
+
+            margin-bottom: 22px;
+        }
+
+        .row {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 11px 0;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            font-size: 13px;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #6b7280;
+        }
+
+        .value {
+            color: #111827;
+
+            font-weight: 700;
+
+            text-align: right;
+
+            word-break: break-word;
+        }
+
+        .btn {
+            width: 100%;
+
+            min-height: 52px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            text-decoration: none;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            color: white;
+
+            font-weight: 800;
+
+            font-size: 14px;
+
+            margin-top: 9px;
+        }
+
+        .btn:active {
+            transform: scale(.97);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="success-icon">
+        ✓
+    </div>
+
+    <h1>
+        Payment Successful!
+    </h1>
+
+    <p class="subtitle">
+        Your payment has been received successfully.
+    </p>
+
+
+    <div class="details">
+
+        <div class="row">
+
+            <span class="label">
+                Payment ID
+            </span>
+
+            <span class="value">
+                {{ payment_id }}
+            </span>
+
+        </div>
+
+
+        <div class="row">
+
+            <span class="label">
+                Order ID
+            </span>
+
+            <span class="value">
+                {{ order_id }}
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <a href="/user/products" class="btn">
+        🛍️ &nbsp; Continue Shopping
+    </a>
+
+    <a href="/user/my-orders"
+       class="btn">
+        📦 &nbsp; View My Orders
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>SmartCart | Products</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f5f7fb;
+
+            color: #111827;
+
+            min-height: 100vh;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* HEADER */
+
+        .header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            padding:
+                20px
+                18px
+                28px;
+
+            color: white;
+
+            border-radius:
+                0
+                0
+                28px
+                28px;
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,0.15);
+        }
+
+
+        .header-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+
+        .header h1 {
+
+            font-size: 28px;
+        }
+
+
+        .header a {
+
+            color: white;
+
+            text-decoration: none;
+
+            min-height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 10px 14px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.18);
+        }
+
+
+        /* SEARCH */
+
+        .search-box {
+
+            display: flex;
+
+            gap: 8px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .search-box input {
+
+            flex: 1;
+
+            height: 48px;
+
+            border: none;
+
+            outline: none;
+
+            border-radius: 14px;
+
+            padding: 0 16px;
+
+            font-size: 15px;
+
+            background: white;
+        }
+
+
+        .search-box button {
+
+            min-width: 70px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background: #111827;
+
+            color: white;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            cursor: pointer;
+        }
+
+
+        /* FILTER */
+
+        .filter {
+
+            display: flex;
+
+            gap: 8px;
+        }
+
+
+        .filter select {
+
+            flex: 1;
+
+            height: 46px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            padding: 0 12px;
+
+            font-size: 14px;
+
+            background: white;
+
+            outline: none;
+        }
+
+
+        .filter button {
+
+            min-width: 75px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background: #111827;
+
+            color: white;
+
+            font-weight: 700;
+        }
+
+
+        /* PRODUCTS */
+
+        .content {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 22px 16px;
+        }
+
+
+        .products {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(190px, 1fr));
+
+            gap: 18px;
+        }
+
+
+        .product-card {
+
+            background: white;
+
+            border-radius: 22px;
+
+            padding: 14px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.08);
+
+            transition: 0.2s ease;
+
+            overflow: hidden;
+        }
+
+
+        .product-card:active {
+
+            transform: scale(0.97);
+        }
+
+
+        .image-box {
+
+            width: 100%;
+
+            height: 165px;
+
+            border-radius: 17px;
+
+            background: #f3f4f6;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            margin-bottom: 13px;
+        }
+
+
+        .product-card img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+
+        .product-card h3 {
+
+            font-size: 17px;
+
+            margin-bottom: 5px;
+
+            color: #111827;
+        }
+
+
+        .category {
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .price {
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            color: #4f46e5;
+
+            margin-bottom: 12px;
+        }
+
+
+        .view-btn {
+
+            width: 100%;
+
+            min-height: 46px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 500px) {
+
+            .products {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 12px;
+            }
+
+            .product-card {
+
+                padding: 10px;
+
+                border-radius: 18px;
+            }
+
+            .image-box {
+
+                height: 130px;
+            }
+
+            .product-card h3 {
+
+                font-size: 14px;
+            }
+
+            .price {
+
+                font-size: 16px;
+            }
+
+            .view-btn {
+
+                min-height: 44px;
+
+                font-size: 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="header-top">
+
+        <h1>
+            🛍️ Products
+        </h1>
+
+        <a href="/user/cart">
+            🛒 Cart
+        </a>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <form method="GET"
+          action="/user/products">
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search products..."
+                value="{{ request.args.get('search', '') }}"
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </div>
+
+
+        <!-- FILTER -->
+
+        <div class="filter">
+
+            <select name="category">
+
+                <option value="">
+                    All Categories
+                </option>
+
+                {% for cat in categories %}
+
+                    <option
+                        value="{{ cat.category }}"
+                        {% if request.args.get('category') == cat.category %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ cat.category }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <button type="submit">
+                Filter
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- CONTENT -->
+
+<div class="content">
+
+
+    <!-- FLASH -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div style="
+                background:#dcfce7;
+                color:#166534;
+                padding:12px;
+                border-radius:12px;
+                margin-bottom:15px;
+            ">
+
+                {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+
+    <!-- PRODUCTS -->
+
+    <div class="products">
+
+
+        {% for product in products %}
+
+
+            <div class="product-card">
+
+
+                <div class="image-box">
+
+                    <img
+                        src="/static/uploads/product_images/{{ product.image }}"
+                        alt="{{ product.name }}"
+                    >
+
+                </div>
+
+
+                <h3>
+                    {{ product.name }}
+                </h3>
+
+
+                <div class="category">
+                    {{ product.category }}
+                </div>
+
+
+                <div class="price">
+                    ₹{{ product.price }}
+                </div>
+
+
+                <a
+                    href="/user/product/{{ product.product_id }}"
+                    class="view-btn"
+                >
+                    View Details
+                </a>
+
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

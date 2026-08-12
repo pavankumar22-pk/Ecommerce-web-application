@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>SmartCart | Update Product</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f4f6fb;
+            color: #111827;
+        }
+
+        .header {
+            padding: 22px 18px 30px;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            color: white;
+
+            border-radius:
+                0 0 28px 28px;
+        }
+
+        .header-inner {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .back {
+            color: white;
+            text-decoration: none;
+
+            min-height: 44px;
+
+            display: inline-flex;
+            align-items: center;
+
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: 29px;
+        }
+
+        .content {
+            max-width: 850px;
+
+            margin: -15px auto 30px;
+
+            padding: 0 16px;
+        }
+
+        .card {
+            background: white;
+
+            border-radius: 26px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,.10);
+        }
+
+        .flash {
+            padding: 12px;
+
+            border-radius: 13px;
+
+            background: #dcfce7;
+            color: #166534;
+
+            margin-bottom: 18px;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            color: #374151;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 13px 14px;
+
+            background: #f9fafb;
+
+            font-family: inherit;
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        input {
+            height: 52px;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #667eea;
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(102,126,234,.10);
+        }
+
+        .old-image {
+            width: 150px;
+            height: 150px;
+
+            object-fit: contain;
+
+            border-radius: 18px;
+
+            padding: 10px;
+
+            background: #f3f4f6;
+
+            display: block;
+
+            margin-top: 8px;
+        }
+
+        .submit {
+            width: 100%;
+
+            min-height: 54px;
+
+            border: none;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(135deg,#667eea,#764ba2);
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
+        .submit:active {
+            transform: scale(.97);
+        }
+
+        @media(max-width:500px) {
+            .card {
+                padding: 20px;
+                border-radius: 22px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<div class="header">
+
+    <div class="header-inner">
+
+        <a href="/admin/item-list" class="back">
+            ← Product List
+        </a>
+
+        <h1>✏️ Update Product</h1>
+
+    </div>
+
+</div>
+
+
+<div class="content">
+
+    <div class="card">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="flash">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <form method="POST"
+              action="/admin/update-item/{{ product.product_id }}"
+              enctype="multipart/form-data">
+
+
+            <div class="field">
+
+                <label>Product Name</label>
+
+                <input type="text"
+                       name="name"
+                       value="{{ product.name }}"
+                       required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Description</label>
+
+                <textarea name="description"
+                          required>{{ product.description }}</textarea>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Category</label>
+
+                <input type="text"
+                       name="category"
+                       value="{{ product.category }}"
+                       required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Price</label>
+
+                <input type="number"
+                       step="0.01"
+                       name="price"
+                       value="{{ product.price }}"
+                       required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Current Product Image</label>
+
+                <img class="old-image"
+                     src="/static/uploads/product_images/{{ product.image }}"
+                     alt="{{ product.name }}">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Choose New Image</label>
+
+                <input type="file"
+                       name="image"
+                       accept="image/*">
+
+            </div>
+
+
+            <button class="submit"
+                    type="submit">
+                ✓ &nbsp; Update Product
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+                   maximum-scale=1.0, user-scalable=no">
+
+    <title>SmartCart | Admin Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", Arial, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(circle at 10% 10%,
+                    rgba(255,255,255,.20),
+                    transparent 25%),
+                linear-gradient(135deg,
+                    #667eea,
+                    #764ba2,
+                    #4f46e5);
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 420px;
+
+            padding: 35px 28px;
+
+            background: rgba(255,255,255,.94);
+            border-radius: 30px;
+
+            box-shadow: 0 25px 60px rgba(0,0,0,.25);
+        }
+
+        .icon {
+            width: 72px;
+            height: 72px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            font-size: 38px;
+
+            background: linear-gradient(135deg,#667eea,#764ba2);
+
+            box-shadow: 0 10px 25px rgba(79,70,229,.30);
+        }
+
+        h1 {
+            text-align: center;
+            color: #111827;
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .flash {
+            padding: 12px;
+            border-radius: 13px;
+            margin-bottom: 16px;
+
+            background: #fee2e2;
+            color: #991b1b;
+
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+
+            color: #374151;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+            height: 53px;
+
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+
+            padding: 0 15px;
+
+            background: #f9fafb;
+
+            font-size: 16px;
+            outline: none;
+
+            transition: .2s;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(102,126,234,.12);
+        }
+
+        .btn {
+            width: 100%;
+            min-height: 54px;
+
+            border: 0;
+            border-radius: 16px;
+
+            background: linear-gradient(135deg,#667eea,#764ba2);
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(79,70,229,.30);
+
+            touch-action: manipulation;
+        }
+
+        .btn:active {
+            transform: scale(.97);
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 22px;
+        }
+
+        .links a {
+            display: block;
+
+            min-height: 44px;
+            padding-top: 10px;
+
+            color: #4f46e5;
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .back {
+            color: #6b7280 !important;
+        }
+
+        @media(max-width:480px) {
+            .card {
+                padding: 30px 20px;
+                border-radius: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">🛠️</div>
+
+    <h1>Admin Login</h1>
+
+    <p class="subtitle">
+        Manage your SmartCart store
+    </p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="/admin-login">
+
+        <div class="field">
+            <label>Email</label>
+
+            <input type="email"
+                   name="email"
+                   placeholder="Enter admin email"
+                   required>
+        </div>
+
+        <div class="field">
+            <label>Password</label>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Enter password"
+                   required>
+        </div>
+
+        <button class="btn" type="submit">
+            🔐 &nbsp; Login
+        </button>
+
+    </form>
+
+    <div class="links">
+
+        <a href="/admin-signup">
+            ✨ Create Admin Account
+        </a>
+
+        <a href="/" class="back">
+            ← Back to SmartCart
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>SmartCart | My Cart</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff,
+                    #ede9fe
+                );
+
+            color: #111827;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+
+            padding: 25px 18px 75px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2,
+                    #4f46e5
+                );
+
+            border-radius:
+                0 0 35px 35px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(79,70,229,.25);
+        }
+
+
+        .header-inner {
+
+            max-width: 1100px;
+
+            margin: auto;
+        }
+
+
+        .back {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            min-height: 44px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        .back:active {
+
+            transform: scale(.96);
+        }
+
+
+        .title {
+
+            margin-top: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+        }
+
+
+        .cart-icon {
+
+            width: 60px;
+            height: 60px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,.18);
+
+            border:
+                1px solid
+                rgba(255,255,255,.25);
+
+            font-size: 30px;
+        }
+
+
+        .title h1 {
+
+            font-size:
+                clamp(28px,5vw,38px);
+
+            margin-bottom: 5px;
+        }
+
+
+        .title p {
+
+            font-size: 13px;
+
+            color:
+                rgba(255,255,255,.75);
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+
+            width: 94%;
+
+            max-width: 1100px;
+
+            margin:
+                -48px
+                auto
+                40px;
+
+            position: relative;
+        }
+
+
+        /* ================= FLASH ================= */
+
+        .flash {
+
+            padding: 14px 18px;
+
+            margin-bottom: 15px;
+
+            border-radius: 15px;
+
+            background: white;
+
+            color: #166534;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,.08);
+        }
+
+
+        /* ================= CART CARD ================= */
+
+        .cart-card {
+
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,.10);
+        }
+
+
+        .cart-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .cart-top h2 {
+
+            font-size: 21px;
+        }
+
+
+        /* ================= SELECT ALL ================= */
+
+        .select-all {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                10px
+                13px;
+
+            border-radius: 12px;
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
+
+        input[type="checkbox"] {
+
+            width: 20px;
+            height: 20px;
+
+            accent-color: #6366f1;
+
+            cursor: pointer;
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+            border:
+                1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            min-width: 850px;
+
+            border-collapse: collapse;
+        }
+
+
+        th {
+
+            padding: 15px 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8faff,
+                    #f5f3ff
+                );
+
+            color: #6b7280;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            border-bottom:
+                1px solid #e5e7eb;
+        }
+
+
+        td {
+
+            padding: 16px 10px;
+
+            text-align: center;
+
+            border-bottom:
+                1px solid #eef0f4;
+
+            font-size: 14px;
+        }
+
+
+        tr:last-child td {
+
+            border-bottom: none;
+        }
+
+
+        tr:hover {
+
+            background: #fafaff;
+        }
+
+
+        /* ================= PRODUCT IMAGE ================= */
+
+        .product-image {
+
+            width: 80px;
+            height: 80px;
+
+            object-fit: contain;
+
+            padding: 7px;
+
+            border-radius: 15px;
+
+            background: #f8fafc;
+
+            border:
+                1px solid #eef0f4;
+        }
+
+
+        /* ================= PRODUCT NAME ================= */
+
+        .product-name {
+
+            font-weight: 800;
+
+            text-align: left;
+        }
+
+
+        /* ================= PRICE ================= */
+
+        .price {
+
+            color: #4f46e5;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* ================= QUANTITY ================= */
+
+        .quantity {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 5px;
+
+            border-radius: 13px;
+
+            background: #f5f3ff;
+        }
+
+
+        .quantity a {
+
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: white;
+
+            color: #4f46e5;
+
+            text-decoration: none;
+
+            font-size: 19px;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,.07);
+
+            touch-action: manipulation;
+        }
+
+
+        .quantity a:active {
+
+            transform: scale(.88);
+        }
+
+
+        .quantity-number {
+
+            min-width: 25px;
+
+            font-weight: 800;
+        }
+
+
+        /* ================= REMOVE ================= */
+
+        .remove {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 40px;
+
+            padding:
+                0
+                13px;
+
+            border-radius: 11px;
+
+            background: #fef2f2;
+
+            color: #dc2626;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            touch-action: manipulation;
+        }
+
+
+        .remove:active {
+
+            transform: scale(.95);
+        }
+
+
+        /* ================= BOTTOM ================= */
+
+        .bottom {
+
+            margin-top: 23px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid #e5e7eb;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .total-box {
+
+            padding:
+                15px
+                20px;
+
+            min-width: 230px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            border:
+                1px solid #e0e7ff;
+        }
+
+
+        .total-label {
+
+            color: #6b7280;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+        }
+
+
+        .total {
+
+            margin-top: 4px;
+
+            color: #4f46e5;
+
+            font-size: 29px;
+
+            font-weight: 900;
+        }
+
+
+        .actions {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .btn {
+
+            min-height: 52px;
+
+            padding:
+                0
+                20px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border: none;
+
+            border-radius: 14px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            touch-action: manipulation;
+        }
+
+
+        .shop {
+
+            color: #4338ca;
+
+            background: #eef2ff;
+        }
+
+
+        .pay {
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            box-shadow:
+                0 9px 22px
+                rgba(79,70,229,.25);
+        }
+
+
+        .btn:active {
+
+            transform: scale(.96);
+        }
+
+
+        /* ================= EMPTY CART ================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding:
+                60px
+                20px;
+        }
+
+
+        .empty-icon {
+
+            font-size: 65px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .empty h2 {
+
+            font-size: 24px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .empty p {
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width:700px) {
+
+            .header {
+
+                padding:
+                    20px
+                    15px
+                    70px;
+            }
+
+
+            .title h1 {
+
+                font-size: 28px;
+            }
+
+
+            .container {
+
+                width: 95%;
+
+                margin-top: -42px;
+            }
+
+
+            .cart-card {
+
+                padding: 15px;
+
+                border-radius: 22px;
+            }
+
+
+            .cart-top {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .select-all {
+
+                width: 100%;
+
+                justify-content: center;
+            }
+
+
+            .bottom {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .total-box {
+
+                width: 100%;
+            }
+
+
+            .actions {
+
+                display: flex;
+
+                flex-direction: column;
+
+                width: 100%;
+            }
+
+
+            .btn {
+
+                width: 100%;
+            }
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <a href="/user/products"
+           class="back">
+
+            ← Continue Shopping
+
+        </a>
+
+
+        <div class="title">
+
+            <div class="cart-icon">
+                🛒
+            </div>
+
+            <div>
+
+                <h1>
+                    My Cart
+                </h1>
+
+                <p>
+                    Select the products you want to buy
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <!-- FLASH -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="flash">
+
+                ✓ {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+
+    {% if not cart %}
+
+
+        <!-- EMPTY CART -->
+
+        <div class="cart-card empty">
+
+            <div class="empty-icon">
+                🛒
+            </div>
+
+            <h2>
+                Your Cart is Empty
+            </h2>
+
+            <p>
+                Add some products before checking out.
+            </p>
+
+            <a href="/user/products"
+               class="btn pay">
+
+                🛍️ Start Shopping
+
+            </a>
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- ================= CHECKOUT FORM ================= -->
+
+        <form
+            method="POST"
+            action="/user/checkout"
+            id="checkoutForm">
+
+
+            <div class="cart-card">
+
+
+                <!-- TOP -->
+
+                <div class="cart-top">
+
+                    <h2>
+                        🛍️ Cart Items
+                    </h2>
+
+
+                    <label class="select-all">
+
+                        <input
+                            type="checkbox"
+                            id="selectAll"
+                            onchange="toggleAll(this)">
+
+                        Select All
+
+                    </label>
+
+                </div>
+
+
+
+                <!-- TABLE -->
+
+                <div class="table-wrapper">
+
+                    <table>
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Select
+                                </th>
+
+                                <th>
+                                    Image
+                                </th>
+
+                                <th>
+                                    Product
+                                </th>
+
+                                <th>
+                                    Price
+                                </th>
+
+                                <th>
+                                    Quantity
+                                </th>
+
+                                <th>
+                                    Total
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                        {% for pid, item in cart.items() %}
+
+                            <tr>
+
+
+                                <!-- CHECKBOX -->
+
+                                <td>
+
+                                    <input
+                                        type="checkbox"
+                                        name="selected_product"
+                                        value="{{ pid }}"
+                                        data-total="{{ item.price * item.quantity }}"
+                                        onchange="updateTotal()">
+
+                                </td>
+
+
+                                <!-- IMAGE -->
+
+                                <td>
+
+                                    <img
+                                        class="product-image"
+                                        src="/static/uploads/product_images/{{ item.image }}"
+                                        alt="{{ item.name }}">
+
+                                </td>
+
+
+                                <!-- NAME -->
+
+                                <td class="product-name">
+
+                                    {{ item.name }}
+
+                                </td>
+
+
+                                <!-- PRICE -->
+
+                                <td class="price">
+
+                                    ₹{{ "%.2f"|format(item.price) }}
+
+                                </td>
+
+
+                                <!-- QUANTITY -->
+
+                                <td>
+
+                                    <div class="quantity">
+
+                                        <a
+                                            href="/user/cart/decrease/{{ pid }}">
+
+                                            −
+
+                                        </a>
+
+
+                                        <span class="quantity-number">
+
+                                            {{ item.quantity }}
+
+                                        </span>
+
+
+                                        <a
+                                            href="/user/cart/increase/{{ pid }}">
+
+                                            +
+
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- TOTAL -->
+
+                                <td class="price">
+
+                                    ₹{{ "%.2f"|format(
+                                        item.price * item.quantity
+                                    ) }}
+
+                                </td>
+
+
+                                <!-- REMOVE -->
+
+                                <td>
+
+                                    <a
+                                        href="/user/cart/remove/{{ pid }}"
+                                        class="remove"
+                                        onclick="return confirm('Remove this product from cart?')">
+
+                                        🗑 Remove
+
+                                    </a>
+
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <!-- ================= BOTTOM ================= -->
+
+                <div class="bottom">
+
+
+                    <!-- SELECTED TOTAL -->
+
+                    <div class="total-box">
+
+                        <div class="total-label">
+                            Selected Total
+                        </div>
+
+                        <div class="total">
+
+                            ₹<span id="grandTotal">0.00</span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="actions">
+
+
+                        <a
+                            href="/user/products"
+                            class="btn shop">
+
+                            🛍️ Continue Shopping
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="btn pay">
+
+                            🔒 Proceed to Pay
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </form>
+
+
+    {% endif %}
+
+
+</main>
+
+
+
+<script>
+
+
+/* =====================================================
+   UPDATE SELECTED TOTAL
+   ===================================================== */
+
+function updateTotal() {
+
+    const checkboxes =
+        document.querySelectorAll(
+            'input[name="selected_product"]'
+        );
+
+    let total = 0;
+
+    let selectedCount = 0;
+
+
+    checkboxes.forEach(function(item) {
+
+        if (item.checked) {
+
+            total +=
+                parseFloat(item.dataset.total);
+
+            selectedCount++;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "grandTotal"
+    ).innerText =
+        total.toFixed(2);
+
+
+    /* Update Select All */
+
+    const selectAll =
+        document.getElementById("selectAll");
+
+
+    if (selectAll) {
+
+        selectAll.checked =
+            selectedCount === checkboxes.length &&
+            checkboxes.length > 0;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   SELECT / UNSELECT ALL
+   ===================================================== */
+
+function toggleAll(source) {
+
+    const checkboxes =
+        document.querySelectorAll(
+            'input[name="selected_product"]'
+        );
+
+
+    checkboxes.forEach(function(item) {
+
+        item.checked =
+            source.checked;
+
+    });
+
+
+    updateTotal();
+
+}
+
+
+
+/* =====================================================
+   CHECK BEFORE CHECKOUT
+   ===================================================== */
+
+document
+    .getElementById("checkoutForm")
+    ?.addEventListener(
+        "submit",
+        function(event) {
+
+
+            const selected =
+                document.querySelectorAll(
+                    'input[name="selected_product"]:checked'
+                );
+
+
+            if (selected.length === 0) {
+
+                event.preventDefault();
+
+
+                alert(
+                    "Please select at least one product to buy."
+                );
+
+
+                return false;
+
+            }
+
+
+        }
+    );
+
+
+/* Initial total */
+
+updateTotal();
+
+
+</script>
+
+
+</body>
+
+</html>
