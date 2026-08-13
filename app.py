@@ -957,6 +957,12 @@ def user_pay():
         )
 
         return redirect('/user/cart')
+    if total_amount > 500000:
+        flash(   
+           "Payment amount cannot exceed ₹5,00,000. Please reduce the quantity.",
+        "danger"
+    )
+    return redirect('/user/cart')
 
 
     razorpay_amount = int(
