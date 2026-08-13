@@ -8,7 +8,7 @@
 SECRET_KEY = "abc123"   # used for sessions
 
 # MySQL Database Configuration
-DB_NAME = "smartcart.db"
+DB_NAME = "/home/pavankumar22/Ecommerce-web-application/smartcart.db"
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 587
 MAIL_USE_TLS = True
