@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<!-- Flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <p style="color:green;">{{ message }}</p>
+  {% endfor %}
+{% endwith %}
+
+<h2>Welcome, {{ admin_name }}</h2>
+
+<!-- Logout Button -->
+<a href="/admin-logout">Logout</a><br><br>
+<a href="/admin/item-list">View All Products</a><br><br>
+<a href="/admin/profile">View Profile</a><br><br>
+
+<p>This is your admin dashboard.</p>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+</head>
+<body>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <p style="color:green;">{{ message }}</p>
+  {% endfor %}
+{% endwith %}
+
+<h2>Welcome, {{ user_name }}!</h2>
+
+<a href="/user/products">Browse Products</a><br><br> 
+
+<br><br>
+<a href="/user/cart">View Cart</a><br><br>
+<a href="/user-logout">Logout</a>
+
+
+</body>
+</html>
