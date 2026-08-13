@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>{% block title %}SmartCart{% endblock %}</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            color: #111827;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* =====================================================
+           MAIN PAGE
+        ===================================================== */
+
+        .page {
+            width: 100%;
+            min-height: 100vh;
+
+            padding:
+                14px
+                18px
+                25px;
+
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            min-width: 0;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            width: 100%;
+
+            min-height: 68px;
+
+            padding: 10px 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 0, 0, .15);
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .brand {
+            min-width: 0;
+
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            flex: 1;
+        }
+
+        .brand-icon {
+            width: 46px;
+            height: 46px;
+
+            flex: 0 0 46px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: white;
+
+            font-size: 23px;
+        }
+
+        .brand-text {
+            min-width: 0;
+        }
+
+        .brand-name {
+            color: white;
+
+            font-size: 20px;
+            font-weight: 850;
+
+            line-height: 1.1;
+
+            white-space: nowrap;
+        }
+
+        .brand-tagline {
+            margin-top: 3px;
+
+            color:
+                rgba(255,255,255,.70);
+
+            font-size: 10px;
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .nav-links {
+            display: flex;
+
+            align-items: center;
+            justify-content: flex-end;
+
+            gap: 7px;
+
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            min-height: 44px;
+
+            padding: 9px 13px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            color: white;
+
+            background:
+                rgba(255,255,255,.10);
+
+            border:
+                1px solid
+                rgba(255,255,255,.18);
+
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 750;
+
+            white-space: nowrap;
+
+            transition:
+                background .2s ease,
+                transform .2s ease;
+        }
+
+        .nav-link:hover {
+            background:
+                rgba(255,255,255,.20);
+
+            transform:
+                translateY(-1px);
+        }
+
+        .nav-link:active {
+            transform:
+                scale(.96);
+        }
+
+        .nav-link.logout {
+            background:
+                rgba(255,255,255,.18);
+        }
+
+
+        /* =====================================================
+           FLASH MESSAGE
+        ===================================================== */
+
+        .flash {
+            width: 100%;
+
+            padding:
+                13px 16px;
+
+            margin-bottom: 18px;
+
+            border-radius: 15px;
+
+            background:
+                #dcfce7;
+
+            color:
+                #166534;
+
+            border:
+                1px solid
+                #86efac;
+
+            box-shadow:
+                0 6px 18px
+                rgba(0,0,0,.06);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content-wrapper {
+            width: 100%;
+            min-width: 0;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media(max-width:600px) {
+
+            .page {
+                padding:
+                    10px
+                    12px
+                    18px;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+
+                border-radius: 18px;
+
+                margin-bottom: 16px;
+            }
+
+            .brand {
+                flex:
+                    1 1 150px;
+            }
+
+            .nav-links {
+                width: 100%;
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(
+                        5,
+                        minmax(0,1fr)
+                    );
+
+                gap: 5px;
+            }
+
+            .nav-link {
+                width: 100%;
+
+                min-height: 40px;
+
+                padding:
+                    8px
+                    3px;
+
+                font-size: 9px;
+            }
+        }
+
+
+        /* =====================================================
+           VERY SMALL PHONES
+        ===================================================== */
+
+        @media(max-width:380px) {
+
+            .page {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            .brand-icon {
+                width: 40px;
+                height: 40px;
+
+                flex-basis: 40px;
+
+                font-size: 20px;
+            }
+
+            .brand-name {
+                font-size: 17px;
+            }
+
+            .brand-tagline {
+                font-size: 8px;
+            }
+
+            .nav-link {
+                min-height: 38px;
+                font-size: 8px;
+            }
+        }
+
+
+        /* =====================================================
+           CHILD PAGE CSS
+        ===================================================== */
+
+        {% block extra_css %}
+        {% endblock %}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             NAVBAR
+        ================================================= -->
+
+        <nav class="navbar">
+
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🛒
+                </div>
+
+
+                <div class="brand-text">
+
+                    <div class="brand-name">
+                        SmartCart
+                    </div>
+
+                    <div class="brand-tagline">
+                        Smart shopping made simple
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="nav-links">
+
+
+                <a
+                    href="/user-dashboard"
+                    class="nav-link"
+                >
+                    🏠 Home
+                </a>
+
+
+                <a
+                    href="/user/products"
+                    class="nav-link"
+                >
+                    🛍️ Products
+                </a>
+
+
+                <a
+                    href="/user/cart"
+                    class="nav-link"
+                >
+                    🛒 Cart
+                </a>
+
+
+                <a
+                    href="/user/my-orders"
+                    class="nav-link"
+                >
+                    📦 Orders
+                </a>
+
+
+                <a
+                    href="/user-logout"
+                    class="nav-link logout"
+                >
+                    🚪 Logout
+                </a>
+
+
+            </div>
+
+        </nav>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================= -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="flash">
+
+                    {% if category == "success" %}
+                        ✓
+                    {% elif category == "danger" %}
+                        ⚠
+                    {% elif category == "error" %}
+                        ⚠
+                    {% else %}
+                        ℹ
+                    {% endif %}
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             CHILD TEMPLATE CONTENT
+        ================================================= -->
+
+        <div class="content-wrapper">
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

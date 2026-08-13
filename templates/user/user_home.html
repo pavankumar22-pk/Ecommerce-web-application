@@ -1,1601 +1,566 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
+{% block title %}
+SmartCart | Dashboard
+{% endblock %}
 
-    <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width,
-                   initial-scale=1.0,
-                   maximum-scale=1.0,
-                   user-scalable=no">
+{% block extra_css %}
 
-    <meta name="theme-color" content="#667eea">
+body {
+    background:
+        linear-gradient(
+            135deg,
+            #667eea 0%,
+            #764ba2 50%,
+            #4f46e5 100%
+        );
+}
 
-    <title>SmartCart | Dashboard</title>
+.home-container {
+    width: 100%;
+}
 
+.welcome {
+    width: 100%;
 
-    <style>
+    padding:
+        clamp(24px,5vw,38px);
 
-        /* =====================================================
-           GLOBAL RESET
-        ===================================================== */
+    border-radius: 28px;
 
-        *,
-        *::before,
-        *::after {
+    background: rgba(255,255,255,.94);
 
-            margin: 0;
-            padding: 0;
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.16);
 
-            box-sizing: border-box;
-        }
+    margin-bottom: 20px;
+}
 
+.welcome-small {
+    color: #6b7280;
 
-        html {
+    font-size: 13px;
+    font-weight: 650;
 
-            width: 100%;
+    margin-bottom: 7px;
+}
 
-            min-height: 100%;
+.welcome h1 {
+    color: #111827;
 
-            overflow-x: hidden;
-        }
+    font-size:
+        clamp(27px,5vw,43px);
 
+    line-height: 1.12;
 
-        body {
+    margin-bottom: 10px;
 
-            width: 100%;
+    overflow-wrap: anywhere;
+}
 
-            min-height: 100vh;
+.welcome p {
+    max-width: 700px;
 
-            overflow-x: hidden;
+    color: #6b7280;
 
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Arial,
-                sans-serif;
+    font-size:
+        clamp(13px,2vw,15px);
 
-            color: #111827;
+    line-height: 1.6;
+}
 
-            background:
-                radial-gradient(
-                    circle at 5% 5%,
-                    rgba(255,255,255,.22),
-                    transparent 25%
-                ),
 
-                radial-gradient(
-                    circle at 95% 95%,
-                    rgba(255,255,255,.15),
-                    transparent 25%
-                ),
+/* QUICK CARDS */
 
-                linear-gradient(
-                    135deg,
-                    #667eea 0%,
-                    #764ba2 50%,
-                    #4f46e5 100%
-                );
+.quick-row {
+    display: grid;
 
-            -webkit-tap-highlight-color:
-                transparent;
-        }
+    grid-template-columns:
+        repeat(3,1fr);
 
+    gap: 14px;
 
-        a,
-        button {
+    margin-bottom: 20px;
+}
 
-            -webkit-tap-highlight-color:
-                transparent;
-        }
+.quick-card {
+    padding: 17px;
 
+    border-radius: 20px;
 
-        /* =====================================================
-           MAIN PAGE
-        ===================================================== */
+    background:
+        rgba(255,255,255,.88);
 
-        .page {
+    box-shadow:
+        0 12px 28px
+        rgba(0,0,0,.10);
 
-            width: 100%;
+    display: flex;
 
-            min-height: 100vh;
+    align-items: center;
 
-            padding:
-                calc(14px + env(safe-area-inset-top))
-                18px
-                calc(25px + env(safe-area-inset-bottom));
+    gap: 12px;
+}
 
-            display: flex;
+.quick-icon {
+    width: 45px;
+    height: 45px;
 
-            justify-content: center;
-        }
+    flex: 0 0 45px;
 
+    display: flex;
 
-        .container {
+    align-items: center;
+    justify-content: center;
 
-            width: 100%;
+    border-radius: 13px;
 
-            max-width: 1100px;
+    background:
+        linear-gradient(
+            135deg,
+            #667eea,
+            #764ba2
+        );
 
-            min-width: 0;
-        }
+    color: white;
 
+    font-size: 20px;
+}
 
-        /* =====================================================
-           NAVBAR
-        ===================================================== */
+.quick-text strong {
+    display: block;
 
-        .navbar {
+    font-size: 13px;
+}
 
-            width: 100%;
+.quick-text span {
+    display: block;
 
-            min-height: 68px;
+    margin-top: 2px;
 
-            padding:
-                10px
-                12px;
+    color: #9ca3af;
 
-            display: flex;
+    font-size: 11px;
+}
 
-            align-items: center;
 
-            justify-content: space-between;
+/* ACTIONS */
 
-            gap: 15px;
+.section-title {
+    margin:
+        5px 0
+        12px 3px;
 
-            border:
-                1px solid
-                rgba(255,255,255,.25);
+    color: white;
 
-            border-radius: 20px;
+    font-size: 18px;
+    font-weight: 800;
+}
 
-            background:
-                rgba(255,255,255,.14);
+.actions {
+    display: grid;
 
-            backdrop-filter:
-                blur(20px);
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
 
-            -webkit-backdrop-filter:
-                blur(20px);
+    gap: 18px;
+}
 
-            box-shadow:
-                0 12px 35px
-                rgba(0,0,0,.15);
+.action-card {
+    min-height: 185px;
 
-            margin-bottom: 22px;
-        }
+    padding: 25px;
 
+    display: flex;
 
-        /* =====================================================
-           BRAND
-        ===================================================== */
+    flex-direction: column;
 
-        .brand {
+    justify-content: space-between;
 
-            min-width: 0;
+    border-radius: 24px;
 
-            display: flex;
+    background:
+        rgba(255,255,255,.94);
 
-            align-items: center;
+    color: #111827;
 
-            gap: 11px;
+    text-decoration: none;
 
-            flex: 1;
-        }
+    box-shadow:
+        0 15px 35px
+        rgba(0,0,0,.13);
 
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
 
-        .brand-icon {
+.action-card:hover {
+    transform: translateY(-4px);
 
-            width: 46px;
-            height: 46px;
+    box-shadow:
+        0 22px 45px
+        rgba(0,0,0,.18);
+}
 
-            flex: 0 0 46px;
+.action-icon {
+    width: 58px;
+    height: 58px;
 
-            display: flex;
+    display: flex;
 
-            align-items: center;
-            justify-content: center;
+    align-items: center;
+    justify-content: center;
 
-            border-radius: 14px;
+    border-radius: 18px;
 
-            background:
-                rgba(255,255,255,.92);
+    background:
+        linear-gradient(
+            135deg,
+            #667eea,
+            #764ba2
+        );
 
-            box-shadow:
-                0 7px 20px
-                rgba(0,0,0,.12);
+    color: white;
 
-            font-size: 23px;
-        }
+    font-size: 28px;
 
+    margin-bottom: 16px;
+}
 
-        .brand-text {
+.action-card h2 {
+    font-size: 20px;
+    margin-bottom: 7px;
+}
 
-            min-width: 0;
-        }
+.action-card p {
+    color: #6b7280;
 
+    font-size: 13px;
 
-        .brand-name {
+    line-height: 1.5;
+}
 
-            color: white;
+.action-arrow {
+    align-self: flex-end;
 
-            font-size: 20px;
+    margin-top: 15px;
 
-            font-weight: 850;
+    color: #4f46e5;
 
-            line-height: 1.1;
+    font-size: 20px;
 
-            white-space: nowrap;
+    font-weight: 900;
+}
 
-            overflow: hidden;
+.footer {
+    padding:
+        20px 5px 5px;
 
-            text-overflow: ellipsis;
-        }
+    text-align: center;
 
+    color:
+        rgba(255,255,255,.65);
 
-        .brand-tagline {
+    font-size: 11px;
+}
 
-            margin-top: 3px;
 
-            color:
-                rgba(255,255,255,.70);
+@media(max-width:600px) {
 
-            font-size: 10px;
+    .welcome {
+        padding: 24px 20px;
+        border-radius: 23px;
+    }
 
-            font-weight: 600;
+    .welcome h1 {
+        font-size: 29px;
+    }
 
-            white-space: nowrap;
-        }
+    .quick-row {
+        grid-template-columns:
+            repeat(3,minmax(0,1fr));
 
+        gap: 7px;
+    }
 
-        /* =====================================================
-           NAV LINKS
-        ===================================================== */
+    .quick-card {
+        min-height: 80px;
 
-        .nav-links {
+        padding: 10px;
 
-            display: flex;
+        flex-direction: column;
 
-            align-items: center;
+        justify-content: center;
 
-            justify-content: flex-end;
+        text-align: center;
 
-            gap: 7px;
+        gap: 5px;
 
-            flex-wrap: wrap;
-        }
+        border-radius: 15px;
+    }
 
+    .quick-icon {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
 
-        .nav-link {
+        font-size: 15px;
+    }
 
-            min-height: 44px;
+    .quick-text strong {
+        font-size: 10px;
+    }
 
-            padding:
-                9px
-                13px;
+    .quick-text span {
+        display: none;
+    }
 
-            display: inline-flex;
+    .actions {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
 
-            align-items: center;
+    .action-card {
+        min-height: 145px;
+        padding: 20px;
+        border-radius: 20px;
+    }
 
-            justify-content: center;
+    .action-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 23px;
+        margin-bottom: 11px;
+    }
 
-            gap: 6px;
+    .action-card h2 {
+        font-size: 18px;
+    }
 
-            border-radius: 12px;
+    .action-card p {
+        font-size: 12px;
+    }
+}
 
-            color: white;
+{% endblock %}
 
-            background:
-                rgba(255,255,255,.10);
 
-            border:
-                1px solid
-                rgba(255,255,255,.18);
+{% block content %}
 
-            text-decoration: none;
+<div class="home-container">
 
-            font-size: 12px;
+    <section class="welcome">
 
-            font-weight: 750;
+        <div class="welcome-small">
+            Welcome back 👋
+        </div>
 
-            white-space: nowrap;
+        <h1>
+            {{ user_name }}
+        </h1>
 
-            transition:
-                transform .18s ease,
-                background .18s ease;
-        }
+        <p>
+            Discover products, manage your cart,
+            track your orders, and enjoy a simple
+            shopping experience with SmartCart.
+        </p>
 
+    </section>
 
-        .nav-link:hover {
 
-            background:
-                rgba(255,255,255,.20);
+    <div class="quick-row">
 
-            transform:
-                translateY(-1px);
-        }
+        <div class="quick-card">
 
-
-        .nav-link:active {
-
-            transform:
-                scale(.95);
-        }
-
-
-        .nav-link.logout {
-
-            background:
-                rgba(255,255,255,.18);
-        }
-
-
-        /* =====================================================
-           FLASH MESSAGE
-        ===================================================== */
-
-        .flash {
-
-            width: 100%;
-
-            padding:
-                13px
-                16px;
-
-            margin-bottom: 18px;
-
-            border-radius: 15px;
-
-            background:
-                rgba(220,252,231,.96);
-
-            color: #166534;
-
-            border:
-                1px solid
-                rgba(134,239,172,.55);
-
-            box-shadow:
-                0 8px 22px
-                rgba(0,0,0,.08);
-
-            font-size: 13px;
-
-            font-weight: 700;
-
-            overflow-wrap: anywhere;
-        }
-
-
-        /* =====================================================
-           WELCOME CARD
-        ===================================================== */
-
-        .welcome {
-
-            width: 100%;
-
-            min-width: 0;
-
-            padding:
-                clamp(24px,5vw,38px);
-
-            border-radius: 28px;
-
-            background:
-                rgba(255,255,255,.94);
-
-            box-shadow:
-                0 20px 50px
-                rgba(0,0,0,.16);
-
-            margin-bottom: 20px;
-
-            overflow: hidden;
-        }
-
-
-        .welcome-content {
-
-            min-width: 0;
-
-            max-width: 800px;
-        }
-
-
-        .welcome-small {
-
-            color: #6b7280;
-
-            font-size: 13px;
-
-            font-weight: 650;
-
-            margin-bottom: 7px;
-        }
-
-
-        .welcome h1 {
-
-            color: #111827;
-
-            font-size:
-                clamp(27px,5vw,43px);
-
-            line-height: 1.12;
-
-            font-weight: 850;
-
-            margin-bottom: 10px;
-
-            overflow-wrap: anywhere;
-
-            word-break: break-word;
-        }
-
-
-        .welcome p {
-
-            max-width: 700px;
-
-            color: #6b7280;
-
-            font-size:
-                clamp(13px,2vw,15px);
-
-            line-height: 1.6;
-        }
-
-
-        /* =====================================================
-           QUICK STATS
-        ===================================================== */
-
-        .quick-row {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 14px;
-
-            margin-bottom: 20px;
-        }
-
-
-        .quick-card {
-
-            min-width: 0;
-
-            padding: 17px;
-
-            border-radius: 20px;
-
-            background:
-                rgba(255,255,255,.88);
-
-            box-shadow:
-                0 12px 28px
-                rgba(0,0,0,.10);
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-        }
-
-
-        .quick-icon {
-
-            width: 45px;
-            height: 45px;
-
-            flex: 0 0 45px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 13px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #667eea,
-                    #764ba2
-                );
-
-            color: white;
-
-            font-size: 20px;
-        }
-
-
-        .quick-text {
-
-            min-width: 0;
-        }
-
-
-        .quick-text strong {
-
-            display: block;
-
-            color: #111827;
-
-            font-size: 13px;
-
-            overflow-wrap: anywhere;
-        }
-
-
-        .quick-text span {
-
-            display: block;
-
-            margin-top: 2px;
-
-            color: #9ca3af;
-
-            font-size: 11px;
-        }
-
-
-        /* =====================================================
-           ACTION SECTION
-        ===================================================== */
-
-        .section-title {
-
-            margin:
-                5px
-                0
-                12px
-                3px;
-
-            color: white;
-
-            font-size: 18px;
-
-            font-weight: 800;
-        }
-
-
-        .actions {
-
-            width: 100%;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0,1fr));
-
-            gap: 18px;
-        }
-
-
-        /* =====================================================
-           ACTION CARDS
-        ===================================================== */
-
-        .action-card {
-
-            min-width: 0;
-
-            min-height: 185px;
-
-            padding:
-                25px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: space-between;
-
-            border-radius: 24px;
-
-            background:
-                rgba(255,255,255,.94);
-
-            color: #111827;
-
-            text-decoration: none;
-
-            box-shadow:
-                0 15px 35px
-                rgba(0,0,0,.13);
-
-            transition:
-                transform .2s ease,
-                box-shadow .2s ease;
-        }
-
-
-        .action-card:hover {
-
-            transform:
-                translateY(-4px);
-
-            box-shadow:
-                0 22px 45px
-                rgba(0,0,0,.18);
-        }
-
-
-        .action-card:active {
-
-            transform:
-                scale(.975);
-        }
-
-
-        .action-top {
-
-            min-width: 0;
-        }
-
-
-        .action-icon {
-
-            width: 58px;
-            height: 58px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #667eea,
-                    #764ba2
-                );
-
-            color: white;
-
-            font-size: 28px;
-
-            margin-bottom: 16px;
-
-            box-shadow:
-                0 8px 20px
-                rgba(79,70,229,.22);
-        }
-
-
-        .action-card h2 {
-
-            font-size: 20px;
-
-            line-height: 1.25;
-
-            margin-bottom: 7px;
-
-            overflow-wrap: anywhere;
-        }
-
-
-        .action-card p {
-
-            color: #6b7280;
-
-            font-size: 13px;
-
-            line-height: 1.5;
-
-            max-width: 430px;
-        }
-
-
-        .action-arrow {
-
-            align-self: flex-end;
-
-            margin-top: 15px;
-
-            color: #4f46e5;
-
-            font-size: 20px;
-
-            font-weight: 900;
-        }
-
-
-        /* =====================================================
-           FOOTER
-        ===================================================== */
-
-        .footer {
-
-            padding:
-                20px
-                5px
-                5px;
-
-            text-align: center;
-
-            color:
-                rgba(255,255,255,.65);
-
-            font-size: 11px;
-        }
-
-
-        /* =====================================================
-           LARGE TABLETS
-        ===================================================== */
-
-        @media (max-width: 900px) {
-
-            .page {
-
-                padding-left: 15px;
-
-                padding-right: 15px;
-            }
-
-            .quick-row {
-
-                grid-template-columns:
-                    repeat(3,minmax(0,1fr));
-            }
-
-        }
-
-
-        /* =====================================================
-           TABLETS
-        ===================================================== */
-
-        @media (max-width: 720px) {
-
-            .navbar {
-
-                align-items: flex-start;
-
-                padding: 10px;
-            }
-
-
-            .nav-links {
-
-                flex-shrink: 0;
-            }
-
-
-            .quick-row {
-
-                grid-template-columns:
-                    repeat(3,minmax(0,1fr));
-
-                gap: 10px;
-            }
-
-
-            .quick-card {
-
-                padding: 13px;
-
-                gap: 8px;
-            }
-
-
-            .quick-icon {
-
-                width: 38px;
-                height: 38px;
-
-                flex-basis: 38px;
-
-                font-size: 17px;
-            }
-
-
-            .quick-text strong {
-
-                font-size: 11px;
-            }
-
-
-            .quick-text span {
-
-                font-size: 9px;
-            }
-
-        }
-
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        @media (max-width: 600px) {
-
-            .page {
-
-                padding:
-                    calc(10px + env(safe-area-inset-top))
-                    12px
-                    calc(18px + env(safe-area-inset-bottom));
-            }
-
-
-            .navbar {
-
-                flex-wrap: wrap;
-
-                border-radius: 18px;
-
-                margin-bottom: 16px;
-            }
-
-
-            .brand {
-
-                flex:
-                    1 1 150px;
-            }
-
-
-            .nav-links {
-
-                width: 100%;
-
-                display: grid;
-
-                grid-template-columns:
-                    repeat(3,minmax(0,1fr));
-
-                gap: 6px;
-            }
-
-
-            .nav-link {
-
-                width: 100%;
-
-                padding:
-                    8px
-                    5px;
-
-                font-size: 11px;
-            }
-
-
-            .welcome {
-
-                padding: 24px 20px;
-
-                border-radius: 23px;
-
-                margin-bottom: 15px;
-            }
-
-
-            .welcome h1 {
-
-                font-size: 29px;
-            }
-
-
-            .quick-row {
-
-                grid-template-columns:
-                    repeat(3,minmax(0,1fr));
-
-                gap: 7px;
-
-                margin-bottom: 18px;
-            }
-
-
-            .quick-card {
-
-                min-height: 80px;
-
-                padding: 10px;
-
-                flex-direction: column;
-
-                justify-content: center;
-
-                text-align: center;
-
-                gap: 5px;
-
-                border-radius: 15px;
-            }
-
-
-            .quick-icon {
-
-                width: 32px;
-                height: 32px;
-
-                flex-basis: 32px;
-
-                border-radius: 10px;
-
-                font-size: 15px;
-            }
-
-
-            .quick-text strong {
-
-                font-size: 10px;
-
-                line-height: 1.2;
-            }
-
-
-            .quick-text span {
-
-                display: none;
-            }
-
-
-            .section-title {
-
-                font-size: 16px;
-
-                margin-bottom: 10px;
-            }
-
-
-            .actions {
-
-                grid-template-columns:
-                    1fr;
-
-                gap: 12px;
-            }
-
-
-            .action-card {
-
-                min-height: 145px;
-
-                padding: 20px;
-
-                border-radius: 20px;
-            }
-
-
-            .action-icon {
-
-                width: 48px;
-                height: 48px;
-
-                flex-basis: 48px;
-
-                border-radius: 15px;
-
-                font-size: 23px;
-
-                margin-bottom: 11px;
-            }
-
-
-            .action-card h2 {
-
-                font-size: 18px;
-            }
-
-
-            .action-card p {
-
-                font-size: 12px;
-            }
-
-        }
-
-
-        /* =====================================================
-           VERY SMALL PHONES
-           320px - 380px
-        ===================================================== */
-
-        @media (max-width: 380px) {
-
-            .page {
-
-                padding-left: 8px;
-
-                padding-right: 8px;
-            }
-
-
-            .navbar {
-
-                padding: 8px;
-            }
-
-
-            .brand-icon {
-
-                width: 40px;
-                height: 40px;
-
-                flex-basis: 40px;
-
-                font-size: 20px;
-            }
-
-
-            .brand-name {
-
-                font-size: 17px;
-            }
-
-
-            .brand-tagline {
-
-                font-size: 8px;
-            }
-
-
-            .nav-link {
-
-                font-size: 9px;
-
-                min-height: 40px;
-            }
-
-
-            .welcome {
-
-                padding:
-                    21px
-                    16px;
-            }
-
-
-            .welcome h1 {
-
-                font-size: 26px;
-            }
-
-
-            .quick-card {
-
-                min-height: 72px;
-
-                padding: 7px;
-            }
-
-
-            .quick-text strong {
-
-                font-size: 9px;
-            }
-
-
-            .action-card {
-
-                padding: 17px;
-
-                min-height: 135px;
-            }
-
-        }
-
-
-        /* =====================================================
-           LANDSCAPE PHONES
-        ===================================================== */
-
-        @media (
-            max-height: 500px
-        ) and (
-            orientation: landscape
-        ) {
-
-            .page {
-
-                padding-top: 8px;
-
-                padding-bottom: 15px;
-            }
-
-
-            .navbar {
-
-                margin-bottom: 12px;
-            }
-
-
-            .welcome {
-
-                padding: 18px;
-
-                margin-bottom: 12px;
-            }
-
-
-            .quick-row {
-
-                margin-bottom: 12px;
-            }
-
-
-            .action-card {
-
-                min-height: 130px;
-
-                padding: 17px;
-            }
-
-        }
-
-
-    </style>
-
-</head>
-
-
-<body>
-
-
-<div class="page">
-
-
-    <div class="container">
-
-
-        <!-- =================================================
-             NAVBAR
-        ================================================= -->
-
-        <nav class="navbar">
-
-
-            <!-- BRAND -->
-
-            <div class="brand">
-
-                <div class="brand-icon">
-                    🛒
-                </div>
-
-
-                <div class="brand-text">
-
-                    <div class="brand-name">
-                        SmartCart
-                    </div>
-
-                    <div class="brand-tagline">
-                        Smart shopping made simple
-                    </div>
-
-                </div>
-
+            <div class="quick-icon">
+                🛍️
             </div>
 
+            <div class="quick-text">
 
-            <!-- NAVIGATION -->
+                <strong>
+                    Products
+                </strong>
 
-            <div class="nav-links">
-
-
-                <a
-                    href="/user-dashboard"
-                    class="nav-link">
-
-                    🏠 Home
-
-                </a>
-
-
-                <a
-                    href="/user/products"
-                    class="nav-link">
-
-                    🛍️ Products
-
-                </a>
-
-
-                <a
-                    href="/user/cart"
-                    class="nav-link">
-
-                    🛒 Cart
-
-                </a>
-
-
-                <a
-                    href="/user/my-orders"
-                    class="nav-link">
-
-                    📦 Orders
-
-                </a>
-
-
-                <a
-                    href="/user-logout"
-                    class="nav-link logout">
-
-                    🚪 Logout
-
-                </a>
-
+                <span>
+                    Explore
+                </span>
 
             </div>
-
-
-        </nav>
-
-
-
-        <!-- =================================================
-             FLASH MESSAGE
-        ================================================= -->
-
-        {% with messages =
-            get_flashed_messages(
-                with_categories=true
-            )
-        %}
-
-            {% for category, message in messages %}
-
-                <div class="flash">
-
-                    {{ message }}
-
-                </div>
-
-            {% endfor %}
-
-        {% endwith %}
-
-
-
-        <!-- =================================================
-             WELCOME
-        ================================================= -->
-
-        <section class="welcome">
-
-
-            <div class="welcome-content">
-
-
-                <div class="welcome-small">
-
-                    Welcome back 👋
-
-                </div>
-
-
-                <h1>
-
-                    {{ user_name }}
-
-                </h1>
-
-
-                <p>
-
-                    Discover products, manage your cart,
-                    track your orders, and enjoy a simple
-                    shopping experience with SmartCart.
-
-                </p>
-
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- =================================================
-             QUICK ACCESS
-        ================================================= -->
-
-        <div class="quick-row">
-
-
-            <div class="quick-card">
-
-                <div class="quick-icon">
-                    🛍️
-                </div>
-
-                <div class="quick-text">
-
-                    <strong>
-                        Products
-                    </strong>
-
-                    <span>
-                        Explore
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="quick-card">
-
-                <div class="quick-icon">
-                    🛒
-                </div>
-
-                <div class="quick-text">
-
-                    <strong>
-                        Cart
-                    </strong>
-
-                    <span>
-                        Your items
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="quick-card">
-
-                <div class="quick-icon">
-                    📦
-                </div>
-
-                <div class="quick-text">
-
-                    <strong>
-                        Orders
-                    </strong>
-
-                    <span>
-                        Track orders
-                    </span>
-
-                </div>
-
-            </div>
-
 
         </div>
 
 
+        <div class="quick-card">
 
-        <!-- =================================================
-             ACTION TITLE
-        ================================================= -->
+            <div class="quick-icon">
+                🛒
+            </div>
 
-        <div class="section-title">
+            <div class="quick-text">
 
-            Quick Access
+                <strong>
+                    Cart
+                </strong>
+
+                <span>
+                    Your items
+                </span>
+
+            </div>
 
         </div>
 
 
+        <div class="quick-card">
 
-        <!-- =================================================
-             ACTION CARDS
-        ================================================= -->
+            <div class="quick-icon">
+                📦
+            </div>
 
-        <div class="actions">
+            <div class="quick-text">
 
+                <strong>
+                    Orders
+                </strong>
 
-            <!-- PRODUCTS -->
+                <span>
+                    Track orders
+                </span>
 
-            <a
-                href="/user/products"
-                class="action-card">
-
-
-                <div class="action-top">
-
-
-                    <div class="action-icon">
-                        🛍️
-                    </div>
-
-
-                    <h2>
-
-                        Browse Products
-
-                    </h2>
-
-
-                    <p>
-
-                        Explore available products,
-                        compare items, and find what
-                        you need.
-
-                    </p>
-
-
-                </div>
-
-
-                <div class="action-arrow">
-
-                    →
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- CART -->
-
-            <a
-                href="/user/cart"
-                class="action-card">
-
-
-                <div class="action-top">
-
-
-                    <div class="action-icon">
-                        🛒
-                    </div>
-
-
-                    <h2>
-
-                        My Cart
-
-                    </h2>
-
-
-                    <p>
-
-                        View your selected items,
-                        choose what you want to buy,
-                        and continue to checkout.
-
-                    </p>
-
-
-                </div>
-
-
-                <div class="action-arrow">
-
-                    →
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- ORDERS -->
-
-            <a
-                href="/user/my-orders"
-                class="action-card">
-
-
-                <div class="action-top">
-
-
-                    <div class="action-icon">
-                        📦
-                    </div>
-
-
-                    <h2>
-
-                        My Orders
-
-                    </h2>
-
-
-                    <p>
-
-                        View your previous orders,
-                        payment details, and invoices.
-
-                    </p>
-
-
-                </div>
-
-
-                <div class="action-arrow">
-
-                    →
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- SHOPPING -->
-
-            <a
-                href="/user/products"
-                class="action-card">
-
-
-                <div class="action-top">
-
-
-                    <div class="action-icon">
-                        ✨
-                    </div>
-
-
-                    <h2>
-
-                        Start Shopping
-
-                    </h2>
-
-
-                    <p>
-
-                        Find something you like and
-                        add it to your SmartCart.
-
-                    </p>
-
-
-                </div>
-
-
-                <div class="action-arrow">
-
-                    →
-
-                </div>
-
-
-            </a>
-
+            </div>
 
         </div>
-
-
-
-        <!-- =================================================
-             FOOTER
-        ================================================= -->
-
-        <footer class="footer">
-
-            SmartCart • Simple • Secure • Smart
-
-        </footer>
-
 
     </div>
 
+
+    <div class="section-title">
+        Quick Access
+    </div>
+
+
+    <div class="actions">
+
+        <a href="/user/products"
+           class="action-card">
+
+            <div>
+
+                <div class="action-icon">
+                    🛍️
+                </div>
+
+                <h2>
+                    Browse Products
+                </h2>
+
+                <p>
+                    Explore available products,
+                    compare items, and find what
+                    you need.
+                </p>
+
+            </div>
+
+            <div class="action-arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <a href="/user/cart"
+           class="action-card">
+
+            <div>
+
+                <div class="action-icon">
+                    🛒
+                </div>
+
+                <h2>
+                    My Cart
+                </h2>
+
+                <p>
+                    View your selected items,
+                    choose what you want to buy,
+                    and continue to checkout.
+                </p>
+
+            </div>
+
+            <div class="action-arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <a href="/user/my-orders"
+           class="action-card">
+
+            <div>
+
+                <div class="action-icon">
+                    📦
+                </div>
+
+                <h2>
+                    My Orders
+                </h2>
+
+                <p>
+                    View your previous orders,
+                    payment details, and invoices.
+                </p>
+
+            </div>
+
+            <div class="action-arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <a href="/user/products"
+           class="action-card">
+
+            <div>
+
+                <div class="action-icon">
+                    ✨
+                </div>
+
+                <h2>
+                    Start Shopping
+                </h2>
+
+                <p>
+                    Find something you like and
+                    add it to your SmartCart.
+                </p>
+
+            </div>
+
+            <div class="action-arrow">
+                →
+            </div>
+
+        </a>
+
+    </div>
+
+
+    <footer class="footer">
+        SmartCart • Simple • Secure • Smart
+    </footer>
+
 </div>
 
-
-</body>
-
-</html>
+{% endblock %}

@@ -8,10 +8,7 @@
 SECRET_KEY = "abc123"   # used for sessions
 
 # MySQL Database Configuration
-DB_HOST = "localhost"
-DB_USER = "root"
-DB_PASSWORD = "Pavan@122"  # keep empty if no password
-DB_NAME = "smartcart_db"
+DB_NAME = "smartcart.db"
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 587
 MAIL_USE_TLS = True

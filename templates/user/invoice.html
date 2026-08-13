@@ -212,144 +212,74 @@
         }
 
 
-        /* ================= ITEMS ================= */
+        /* ==============================
+   ORDER ITEMS TABLE
+   ============================== */
 
-        .items-section {
+.items-section {
+    margin-top: 25px;
+    margin-bottom: 30px;
+    page-break-inside: avoid;
+}
 
-            margin-top: 28px;
-        }
+.table-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
 
-        .items-section h3 {
+th,
+td {
+    padding: 14px 12px;
+    border: 1px solid #d9dee8;
+    text-align: left;
+    line-height: 1.4;
+}
 
-            font-size: 19px;
+th {
+    background: #f5f7fa;
+    font-weight: 600;
+}
 
-            margin-bottom: 13px;
-        }
-
-
-        .table-wrapper {
-
-            width: 100%;
-
-            overflow-x: auto;
-
-            border:
-                1px solid #e5e7eb;
-
-            border-radius: 17px;
-        }
-
-
-        table {
-
-            width: 100%;
-
-            min-width: 520px;
-
-            border-collapse: collapse;
-        }
-
-
-        th {
-
-            background:
-                #f8fafc;
-
-            color: #6b7280;
-
-            font-size: 11px;
-
-            text-transform: uppercase;
-
-            letter-spacing: .3px;
-
-            text-align: left;
-        }
+tbody tr {
+    page-break-inside: avoid;
+}
 
 
-        th,
-        td {
+/* ==============================
+   GRAND TOTAL
+   ============================== */
 
-            padding: 14px;
+.total-section {
+    width: 100%;
+    margin-top: 30px;
+    padding-top: 15px;
+    clear: both;
+    page-break-inside: avoid;
+}
 
-            border-bottom:
-                1px solid #e5e7eb;
-        }
+.total-box {
+    width: 100%;
+    border-top: 2px solid #d9dee8;
+    padding-top: 12px;
+}
 
+.total-label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
 
-        tr:last-child td {
-
-            border-bottom: none;
-        }
-
-
-        td {
-
-            color: #374151;
-
-            font-size: 13px;
-        }
-
-
-        td:first-child {
-
-            font-weight: 700;
-
-            color: #111827;
-        }
-
-
-        /* ================= TOTAL ================= */
-
-        .total-section {
-
-            display: flex;
-
-            justify-content: flex-end;
-
-            margin-top: 22px;
-        }
-
-
-        .total-box {
-
-            width: 280px;
-
-            padding: 20px;
-
-            border-radius: 20px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #eef2ff,
-                    #f5f3ff
-                );
-
-            border:
-                1px solid #e0e7ff;
-        }
-
-
-        .total-label {
-
-            color: #6b7280;
-
-            font-size: 12px;
-
-            margin-bottom: 5px;
-        }
-
-
-        .total {
-
-            color: #4f46e5;
-
-            font-size: 28px;
-
-            font-weight: 900;
-        }
+.total {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+}
 
 
         /* ================= FOOTER ================= */
@@ -522,21 +452,61 @@
 
     <!-- ================= CUSTOMER ================= -->
 
-    <div class="customer-section">
+   <!-- ================= CUSTOMER ================= -->
 
-        <div class="section-label">
-            CUSTOMER DETAILS
-        </div>
+<div class="customer-section">
 
-        <div class="customer-id">
-
-            User ID:
-            {{ order.user_id }}
-
-        </div>
-
+    <div class="section-label">
+        CUSTOMER DETAILS
     </div>
 
+    <p class="customer-id">
+        <strong>Name:</strong>
+        {{ user.name }}
+    </p>
+
+    <p class="customer-id">
+        <strong>User ID:</strong>
+        {{ user.user_id }}
+    </p>
+
+    <p class="customer-id">
+        <strong>Email:</strong>
+        {{ user.email }}
+    </p>
+
+    {% if delivery_address %}
+
+    <p class="customer-id" style="margin-top: 10px;">
+        <strong>Phone:</strong>
+        {{ delivery_address.phone }}
+    </p>
+
+    <p class="customer-id" style="margin-top: 10px;">
+        <strong>Delivery Address:</strong><br>
+
+        {{ delivery_address.address }}<br>
+
+        {{ delivery_address.city }} -
+        {{ delivery_address.pincode }}
+
+    </p>
+
+    {% else %}
+
+    <p class="customer-id" style="margin-top: 10px;">
+        <strong>Phone:</strong>
+        Not available
+    </p>
+
+    <p class="customer-id" style="margin-top: 10px;">
+        <strong>Delivery Address:</strong>
+        Not available
+    </p>
+
+    {% endif %}
+
+</div>
 
 
     <!-- ================= ITEMS ================= -->
@@ -605,23 +575,25 @@
 
 
 
-    <!-- ================= TOTAL ================= -->
+    
 
-    <div class="total-section">
+<!-- ================= TOTAL ================= -->
 
-        <div class="total-box">
+<div class="total-section">
 
-            <div class="total-label">
-                GRAND TOTAL
-            </div>
+    <div class="total-box">
 
-            <div class="total">
-                ₹{{ order.amount }}
-            </div>
+        <div class="total-label">
+            GRAND TOTAL
+        </div>
 
+        <div class="total">
+            ₹{{ order.amount }}
         </div>
 
     </div>
+
+</div>
 
 
 
