@@ -887,6 +887,7 @@ def decrease_quantity(pid):
             cart.pop(pid)
 
     session['cart'] = cart
+
     return redirect('/user/cart')
 
 # ROUTE 5: Remove Item Completely
