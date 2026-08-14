@@ -1,118 +1,147 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Your Cart</title>
+{% extends "base.html" %}
 
-    <script>
-     function updateGrandTotal() {
+{% block title %}Your Cart{% endblock %}
 
-     const checkboxes = document.getElementsByName("selected_product");
-    let grandTotal = 0;
+{% block content %}
 
-    checkboxes.forEach(item => {
-        if (item.checked) {
-            grandTotal += parseFloat(item.dataset.total);
-        }
-    });
+<div class="container mt-4">
 
-    document.getElementById("grandTotal").innerText = grandTotal.toFixed(2);
-}
-</script>
+    <h2 class="mb-4">Your Cart</h2>
 
-</head>
-
-<body>
-
-<h2>Your Cart</h2>
-
-<!-- Flash Messages -->
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% for category, message in messages %}
-        <p style="color:red;">{{ message }}</p>
-    {% endfor %}
-{% endwith %}
-
-{% if not cart %}
-
-    <p>Your cart is empty.</p>
-    <a href="/user/products">Shop Now</a>
-
-{% else %}
-
-<form action="/user/pay" method="POST">
-
-<table border="1" cellpadding="10">
-
-    <tr>
-        <th>Select</th>
-        <th>Image</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
-        <th>Action</th>
-    </tr>
-
-    {% for pid, item in cart.items() %}
-
-    <tr>
-
-       <td>
-            <input
-                type="checkbox"
-                name="selected_product"
-                value="{{ pid }}"
-                data-total="{{ item.price * item.quantity }}"
-                onclick="updateGrandTotal()">
-        </td>
-        <td>
-            <img src="/static/uploads/product_images/{{ item.image }}"
-                 width="80">
-        </td>
-
-        <td>{{ item.name }}</td>
-
-        <td>₹{{ item.price }}</td>
-
-        <td>
-            <a href="/user/cart/decrease/{{ pid }}">-</a>
-
-            {{ item.quantity }}
-
-            <a href="/user/cart/increase/{{ pid }}">+</a>
-        </td>
-
-        <td>
-            ₹{{ item.price * item.quantity }}
-        </td>
-
-        <td>
-            <a href="/user/cart/remove/{{ pid }}">Remove</a>
-        </td>
-
-    </tr>
-
-    {% endfor %}
-
-</table>
-
-<br>
-
-<h3>
-    Grand Total: ₹<span id="grandTotal">0.00</span>
-</h3>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
 
 
-<br><br>
-<a href="/user/address">Proceed to Pay</a><br><br>
+    {% if not cart %}
 
-<a href="/user/products">
-    Continue Shopping
-</a>
+        <div class="card shadow-sm p-4 text-center">
 
-</form>
+            <h4>Your cart is empty</h4>
 
-{% endif %}
+            <a href="/user/products"
+               class="btn btn-primary mt-3">
+                Shop Now
+            </a>
 
-</body>
-</html>
+        </div>
+
+    {% else %}
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                {% for pid, item in cart.items() %}
+
+                <div class="row align-items-center border-bottom py-3">
+
+                    <!-- Product Image -->
+                    <div class="col-md-2 text-center">
+
+                        <img
+                            src="/static/uploads/product_images/{{ item.image }}"
+                            class="img-fluid"
+                            style="max-height:100px; object-fit:contain;"
+                        >
+
+                    </div>
+
+
+                    <!-- Product -->
+                    <div class="col-md-3">
+
+                        <h5>{{ item.name }}</h5>
+
+                        <p class="mb-1">
+                            ₹{{ item.price }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- Quantity -->
+                    <div class="col-md-3">
+
+                        <a href="/user/cart/decrease/{{ pid }}"
+                           class="btn btn-outline-secondary btn-sm">
+                            −
+                        </a>
+
+                        <span class="mx-3">
+                            {{ item.quantity }}
+                        </span>
+
+                        <a href="/user/cart/increase/{{ pid }}"
+                           class="btn btn-outline-secondary btn-sm">
+                            +
+                        </a>
+
+                    </div>
+
+
+                    <!-- Total -->
+                    <div class="col-md-2">
+
+                        <strong>
+                            ₹{{ item.price * item.quantity }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Remove -->
+                    <div class="col-md-2">
+
+                        <a href="/user/cart/remove/{{ pid }}"
+                           class="btn btn-outline-danger btn-sm">
+                            Remove
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+
+                <!-- Total -->
+
+                <div class="text-end mt-4">
+
+                    <h4>
+                        Total:
+                        ₹{{ grand_total }}
+                    </h4>
+
+                </div>
+
+
+                <!-- Proceed -->
+
+                <div class="text-end mt-3">
+
+                    <a href="/user/address"
+                       class="btn btn-primary btn-lg">
+
+                        Proceed to Payment
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

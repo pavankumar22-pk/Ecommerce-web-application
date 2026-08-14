@@ -1,22 +1,46 @@
-<h2>Add Delivery Address</h2>
+{% extends "base.html" %}
 
-<form action="/user/save-address" method="POST">
+{% block content %}
 
-    <label>Full Name</label><br>
-    <input type="text" name="name" required><br><br>
+<div class="container mt-4">
+    <div class="card shadow p-4 mx-auto" style="max-width: 700px;">
 
-    <label>Phone</label><br>
-    <input type="text" name="phone" required><br><br>
+        <h2 class="mb-4">Add Delivery Address</h2>
 
-    <label>Address</label><br>
-    <textarea name="address" required></textarea><br><br>
+        <form action="{{ url_for('save_address') }}" method="POST">
 
-    <label>City</label><br>
-    <input type="text" name="city" required><br><br>
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
 
-    <label>Pincode</label><br>
-    <input type="text" name="pincode" required><br><br>
+            <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input type="text" name="phone" class="form-control" required>
+            </div>
 
-    <button type="submit">Save Address</button>
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea name="address" class="form-control" rows="3" required></textarea>
+            </div>
 
-</form>
+            <div class="mb-3">
+                <label class="form-label">City</label>
+                <input type="text" name="city" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Pincode</label>
+                <input type="text" name="pincode" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Save Address & Continue to Payment
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
