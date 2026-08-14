@@ -7,6 +7,7 @@ from __future__ import annotations
 import os
 import secrets
 import sqlite3
+import time
 import uuid
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from functools import wraps
@@ -388,6 +389,84 @@ def user_login():
     session.clear(); session.update(user_id=user["user_id"], user_name=user["name"], user_email=user["email"])
     flash("Login successful!", "success")
     return redirect(url_for("user_dashboard"))
+
+
+@app.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+    """Email a short-lived OTP for a user password reset."""
+    if request.method == "GET":
+        return render_template("user/forgot_password.html")
+
+    email = form_value("email").lower()
+    if not email:
+        flash("Please enter your email address.", "danger")
+        return redirect(url_for("forgot_password"))
+
+    with get_db_connection() as conn:
+        user = conn.execute("SELECT user_id, email FROM users WHERE email=?", (email,)).fetchone()
+
+    # Use one message for unknown addresses so this endpoint cannot be used to
+    # discover which email addresses have accounts.
+    if user:
+        otp = str(secrets.randbelow(900000) + 100000)
+        session["password_reset_email"] = user["email"]
+        session["password_reset_otp"] = otp
+        session["password_reset_expires"] = int(time.time()) + 600
+        try:
+            message = Message(
+                "SmartCart password reset code",
+                sender=app.config["MAIL_USERNAME"],
+                recipients=[user["email"]],
+            )
+            message.body = f"Your SmartCart password-reset code is: {otp}. It expires in 10 minutes."
+            mail.send(message)
+        except Exception:
+            app.logger.exception("Could not send password reset email")
+            for key in ("password_reset_email", "password_reset_otp", "password_reset_expires"):
+                session.pop(key, None)
+            flash("Could not send the reset email. Please check the mail configuration and try again.", "danger")
+            return redirect(url_for("forgot_password"))
+
+    flash("If that email is registered, a password-reset code has been sent.", "success")
+    return redirect(url_for("reset_password"))
+
+
+@app.route("/reset-password", methods=["GET", "POST"])
+def reset_password():
+    if request.method == "GET":
+        return render_template("user/reset_password.html")
+
+    otp = form_value("otp")
+    password = form_value("password")
+    confirm_password = form_value("confirm_password")
+    email = session.get("password_reset_email")
+    expected_otp = session.get("password_reset_otp")
+    expires_at = session.get("password_reset_expires", 0)
+
+    if not email or not expected_otp or time.time() > expires_at:
+        for key in ("password_reset_email", "password_reset_otp", "password_reset_expires"):
+            session.pop(key, None)
+        flash("Your reset code has expired. Please request a new one.", "danger")
+        return redirect(url_for("forgot_password"))
+    if not password or password != confirm_password:
+        flash("Passwords must match.", "danger")
+        return redirect(url_for("reset_password"))
+    if not secrets.compare_digest(expected_otp, otp):
+        flash("Invalid reset code.", "danger")
+        return redirect(url_for("reset_password"))
+
+    with get_db_connection() as conn:
+        result = conn.execute(
+            "UPDATE users SET password=? WHERE email=?",
+            (bcrypt.hashpw(password.encode(), bcrypt.gensalt()), email),
+        )
+    for key in ("password_reset_email", "password_reset_otp", "password_reset_expires"):
+        session.pop(key, None)
+    if result.rowcount != 1:
+        flash("Unable to reset the password. Please try again.", "danger")
+        return redirect(url_for("forgot_password"))
+    flash("Password reset successfully. Please log in.", "success")
+    return redirect(url_for("user_login"))
 
 
 @app.route("/user-dashboard")
